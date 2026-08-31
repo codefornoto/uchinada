@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>内灘町役場｜生成AIを用いたバイブコーディング研修</title>
+<style>
+:root{--blue:#196DAC;--blue2:#105684;--green:#186845;--pale:#eef5f8;--ink:#183244;--muted:#617685;--line:#d7e3e9;--code:#17232b}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{overflow:hidden;color:var(--ink);background:linear-gradient(180deg,#e6f1f7,transparent 22%),var(--pale);font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,Arial,sans-serif;line-height:1.65}button,a{font:inherit}.app{height:100%;display:grid;grid-template-rows:68px minmax(0,1fr) 64px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:8px 26px;background:#fff;border-bottom:3px solid var(--green);box-shadow:0 3px 14px #11445e14;z-index:3}.top strong{display:block;color:var(--blue);line-height:1.3}.top small{display:block;color:var(--muted);letter-spacing:.04em}.brand{display:flex;align-items:center;gap:10px;color:var(--green);font-size:.82rem;font-weight:800}.emblem{width:44px;height:50px;object-fit:contain}
+.stage{min-height:0;padding:24px}.slide{display:none;width:min(1320px,100%);height:100%;margin:auto;overflow:auto;padding:clamp(24px,3vw,46px);background:#fff;border:1px solid #196dac29;border-top:5px solid var(--blue);border-radius:15px;box-shadow:0 12px 35px #1245611c;scrollbar-width:thin}.slide.active{display:block;animation:enter .2s ease-out}@keyframes enter{from{opacity:0;transform:translateY(5px)}}
+.kicker{color:var(--blue);font-size:.78rem;font-weight:900;letter-spacing:.14em}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.1rem,4.6vw,4.7rem);line-height:1.18;letter-spacing:-.04em}h2{font-size:clamp(1.65rem,2.7vw,2.65rem);line-height:1.3;color:var(--blue);margin-bottom:18px}h2:after{content:"";display:block;width:72px;height:4px;margin-top:12px;background:var(--green);border-radius:9px}h3{font-size:1.15rem;line-height:1.4}strong{color:var(--blue2)}code{font-family:Consolas,"Courier New",monospace}
+.cover{position:relative;align-items:center;overflow:hidden;background:radial-gradient(circle at 90% 15%,#1868451f,transparent 25%),linear-gradient(135deg,#fff 0 62%,#eaf4f8 62%)}.cover.active{display:flex}.cover-copy{max-width:900px;position:relative;z-index:1}.eyebrow{display:flex;align-items:center;gap:9px;color:var(--blue);font-weight:900;letter-spacing:.08em}.eyebrow:before{content:"";width:28px;height:3px;background:var(--green)}.cover h1 span{color:var(--blue)}.subtitle{max-width:720px;color:var(--muted);font-size:clamp(1rem,1.7vw,1.35rem)}.goal{display:inline-flex;align-items:center;gap:13px;margin-top:25px;padding:16px 22px;border-left:5px solid var(--green);background:#fff;box-shadow:0 8px 22px #1868451c;font-weight:900}.goal svg{width:27px;color:var(--green)}.waves{position:absolute;right:-5%;bottom:-12%;width:45%;min-width:360px;color:var(--blue);opacity:.12}
+.g2,.g3,.g4{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.card{min-width:0;padding:20px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 14px #1348630f}.icon{display:grid;place-items:center;width:46px;height:46px;margin-bottom:14px;border-radius:11px;color:#fff;background:var(--blue)}.icon.green{background:var(--green)}.icon svg{width:25px}.card h3{margin-bottom:8px}.card p{color:var(--muted);font-size:.9rem}.link{color:var(--blue);font-size:.8rem;font-weight:800}.tag{display:inline-block;padding:3px 9px;border-radius:99px;background:#e8f3ed;color:var(--green);font-size:.72rem;font-weight:900}
+.objectives{display:grid;gap:14px;margin-top:25px}.objective{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:15px;padding:16px 19px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;background:#fbfdfe}.objective b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;color:#fff;background:var(--green)}.objective span{font-weight:800}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin:28px 0 22px}.flow>div{position:relative;padding:18px;border:1px solid var(--line);border-radius:12px}.flow>div:not(:last-child):after{content:"→";position:absolute;right:-24px;top:40%;color:var(--blue);font-size:1.5rem;font-weight:900}.flow small{color:var(--blue);font-weight:900}.flow h3{margin:4px 0}.flow p{margin:0;color:var(--muted);font-size:.82rem}.tip,.notice{margin-top:20px;padding:15px 18px;border-left:5px solid var(--green);border-radius:9px;background:#e8f3ed}.notice{border-color:var(--blue);background:#eef6fb}.tip p,.notice p{margin:0;font-size:.9rem}
+.split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:18px;min-height:390px}.codebox,.preview{min-width:0;overflow:hidden;border:1px solid #2f414d;border-radius:11px;background:var(--code)}.preview{border-color:var(--line);background:#fff}.panel{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 13px;background:#243640;color:#fff;font-size:.8rem;font-weight:800}.preview .panel{background:#edf3f6;color:var(--ink)}.copy,.action{padding:7px 12px;border:0;border-radius:7px;color:#fff;background:var(--blue);cursor:pointer;font-size:.76rem;font-weight:900}.copy.done,.action.green{background:var(--green)}pre{margin:0}.codebox pre{height:360px;overflow:auto;padding:16px;color:#e7f0f3;font-size:12px;line-height:1.58;white-space:pre}.frame{width:100%;height:360px;display:block;border:0}.tall .codebox pre,.tall .frame{height:430px}
+.terms{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:22px}.term{padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#fbfdfe}.term b{color:var(--blue)}.term span{color:var(--muted);font-size:.88rem}.folderbox{padding:22px;border-radius:11px;background:var(--code);color:#dceaf0;font:15px/1.9 Consolas,monospace}.folder{color:#8ed2ff}.file{color:#bce3bc}.comment{color:#95a8b3}.path{padding:18px;border:1px solid var(--line);border-radius:10px;background:#f1f6f8;overflow:auto}
+.banner{display:flex;align-items:center;gap:18px;padding:18px 20px;margin-bottom:20px;border-radius:12px;color:#fff;background:linear-gradient(110deg,var(--blue),#2e83bd)}.banner svg{width:38px;flex:none}.banner h3,.banner p{margin:0}.banner p{font-size:.9rem;opacity:.92}.req{padding-left:1.25em}.req li{margin:7px 0}.prompt{width:100%;height:265px;resize:none;padding:15px;border:1px solid var(--line);border-radius:0 0 9px 9px;color:var(--ink);background:#fbfdfe;font:13px/1.65 "Yu Gothic",Meiryo,sans-serif}.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+.demo{padding:17px;border:1px solid var(--line);border-radius:11px;background:#fbfdfe}.demo-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.demo-head h3{margin-bottom:8px}.app-badge{padding:3px 8px;border-radius:99px;color:var(--green);background:#e8f3ed;font-size:.67rem;font-weight:900}.dropzone{display:flex;align-items:center;justify-content:center;gap:12px;min-height:82px;margin-bottom:10px;padding:13px;border:2px dashed #7baecc;border-radius:10px;color:var(--blue);background:#f0f8fc;cursor:pointer;text-align:left;transition:.18s}.dropzone:hover,.dropzone.dragover{border-color:var(--green);color:var(--green);background:#edf8f2}.dropzone svg{width:31px;flex:none}.dropzone b{display:block}.dropzone small{display:block;color:var(--muted);font-size:.7rem}.file-status{margin:-2px 0 10px;color:var(--muted);font-size:.7rem}.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.filters label{color:var(--muted);font-size:.75rem;font-weight:800}.filters select{width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:7px;background:#fff}.count{margin:10px 0 7px;color:var(--green);font-size:.82rem;font-weight:900}.tablewrap{max-height:150px;overflow:auto;border:1px solid var(--line);border-radius:8px}.mini{width:100%;border-collapse:collapse;font-size:.73rem}.mini th,.mini td{padding:7px;text-align:left;border-bottom:1px solid var(--line)}.mini th{color:var(--blue);background:#edf5f9}.prompt-modal{display:none;position:fixed;inset:0;z-index:50;align-items:center;justify-content:center;padding:20px;background:#102c3dbf}.prompt-modal.open{display:flex}.modal-card-main{width:min(760px,96vw);max-height:86vh;overflow:auto;padding:24px;border-top:5px solid var(--blue);border-radius:13px;background:#fff;box-shadow:0 24px 70px #0005}.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.modal-title h3{margin:0;color:var(--blue);font-size:1.35rem}.close-modal{display:grid;place-items:center;width:34px;height:34px;flex:none;border:1px solid var(--line);border-radius:50%;color:var(--muted);background:#fff;cursor:pointer;font-size:1.25rem}.prompt-code{margin:16px 0;padding:16px;border-radius:9px;color:#e7f0f3;background:var(--code);font:12px/1.65 Consolas,"Yu Gothic",monospace;white-space:pre-wrap}.modal-actions{display:flex;justify-content:flex-end;gap:8px}
+.nav{display:grid;grid-template-columns:1fr minmax(220px,420px) 1fr;align-items:center;gap:18px;padding:9px 24px;background:#fff;border-top:1px solid var(--line);z-index:3}.navleft,.navright{display:flex;gap:8px}.navright{justify-content:flex-end}.navbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:92px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;color:var(--blue);background:#fff;cursor:pointer;font-size:.82rem;font-weight:900}.navbtn.primary{color:#fff;background:var(--blue);border-color:var(--blue)}.navbtn:disabled{opacity:.35}.navbtn svg{width:16px}.progress{text-align:center;color:var(--muted);font-size:.73rem;font-weight:800}.bar{height:5px;margin-top:5px;overflow:hidden;border-radius:9px;background:#dce8ed}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:.2s}.save{min-width:auto;color:var(--green)}
+@media(max-width:900px){.app{grid-template-rows:60px 1fr 60px}.stage{padding:12px}.slide{padding:23px 20px}.g3,.g4{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}.flow>div:after{display:none}.top small,.brand span{display:none}.terms{grid-template-columns:1fr}.nav{grid-template-columns:1fr 1fr}.progress{display:none}}
+@media(max-width:590px){.g2,.g3,.g4,.flow{grid-template-columns:1fr}.top{padding:7px 14px}.emblem{width:35px;height:41px}.stage{padding:8px}.slide{padding:19px 16px;border-radius:9px}.nav{padding:7px 10px;gap:7px}.navbtn{min-width:0;width:100%;padding:8px}.save{display:none}.split{display:block}.preview{margin-top:12px}.filters{grid-template-columns:1fr}}
+@media print{body{overflow:visible;background:#fff}.app{display:block;height:auto}.top,.nav{display:none}.stage{padding:0}.slide,.slide.active,.cover,.cover.active{display:block;width:100%;height:100vh;break-after:page;border:0;border-radius:0;box-shadow:none}.cover,.cover.active{display:flex}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><strong>生成AIを活用したバイブコーディング入門</strong><small>HTMLベースのWebアプリで、身の回りの業務を改善する</small></div><div class="brand"><span>内灘町役場</span><img class="emblem" alt="内灘町章" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNDI0IiB3aWR0aD0iMzYwIj4NCjxwYXRoIGQ9Ik0xNzkuOTczIDcyLjczMmMtNjIuNzQ4IDAtMTE3LjU1NiAzMy44OTMtMTQ3LjE0OSA4NC4zODMgMS4xMzkgMTQuMTIgNi41MiA1NS45NjYgMzAuOTE2IDcxLjcwNyA3LjExLTU3Ljg4NyA1Ni40MjgtMTAyLjc0IDExNi4yMzMtMTAyLjc0IDY0LjY5MiAwIDExNy4yMjYgNTIuNDggMTE3LjIyNiAxMTcuMTcyIDAgNjQuNjkyLTUyLjUzNCAxMTcuMTE5LTExNy4yMjYgMTE3LjExOS01OS44MDYgMC0xMDkuMTI1LTQ0LjgwNy0xMTYuMjM1LTEwMi42ODgtOS45OTctNi4yMTEtMzguOTctMjcuMzE3LTQ1Ljk4OC02Ni45NDctNS4zNDUgMTYuNTQzLTguMjQ0IDM0LjE4Ny04LjI0NCA1Mi41MTYgMCA5NC4xNjEgNzYuMzA1IDE3MC41MjMgMTcwLjQ2NyAxNzAuNTIzIDk0LjIxNSAwIDE3MC41NzYtNzYuMzYyIDE3MC41NzYtMTcwLjUyMyAwLTk0LjIxNi03Ni4zNi0xNzAuNTIyLTE3MC41NzYtMTcwLjUyMnptLjEwOC02MS44MTVjLTQxLjAzIDAtNzUuNTQ2IDI4LjA1OS04NS4yMDYgNjYuMDVDMTIwLjYgNjQuMTAzIDE0OS42ODkgNTYuODMgMTgwLjQwNyA1Ni44M2MzMC40NDYgMCA1OS4yMSA3LjExIDg0Ljc3MiAxOS43LTkuODc3LTM3Ljc3Mi00NC4yODUtNjUuNjE0LTg1LjA5OC02NS42MTQiIGZpbGw9IiMwZjY2NDUiLz4NCjxwYXRoIGQ9Ik0xNzkuOTczIDM1My4xNTVjLTYwLjczIDAtMTA5LjktNDkuMTctMTA5LjktMTA5LjkgMC02MC43MyA0OS4xNy0xMDkuOTU1IDEwOS45LTEwOS45NTUgNjAuNzMgMCAxMTAuMDA5IDQ5LjIyNSAxMTAuMDA5IDEwOS45NTVzLTQ5LjI4IDEwOS45LTExMC4wMSAxMDkuOXptMC0yODcuODU3QzgxLjc0IDY1LjI5OCAyLjA3IDE0NC45NjggMi4wNyAyNDMuMjU1YzAgOTguMjg2IDc5LjY3MSAxNzcuOTAyIDE3Ny45MDMgMTc3LjkwMiA5OC4yODYgMCAxNzcuOTU3LTc5LjYxNiAxNzcuOTU3LTE3Ny45MDIgMC05OC4yODYtNzkuNjcxLTE3Ny45NTctMTc3Ljk1Ny0xNzcuOTU3em05Ny45NzIgMjkuMzg3QzI3NS4xNCA0My4wODYgMjMyLjM3NCAyLjA3IDE3OS45NzMgMi4wN2MtNTIuMjY4IDAtOTQuOTYgNDAuOTctOTcuODA1IDkyLjUzTTI0LjgxIDE1Ny40NXMtNS4xMDIgNjEuMzI3IDQ0LjU1NyA4OS4wNiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6NC4xNDAyOCIvPg0KPC9zdmc+"></div></header>
+<main class="stage">
+
+<section class="slide cover active"><div class="cover-copy"><p class="eyebrow">内灘町役場 研修資料</p><h1>生成AIを活用した<br><span>バイブコーディング入門</span></h1><p class="subtitle">HTMLベースのWebアプリを作り、身の回りの業務を改善する</p><div class="goal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>今日のゴール「簡単なWebアプリを作れるようになる」</div></div><svg class="waves" viewBox="0 0 600 300" fill="none"><path d="M0 130C100 50 170 210 280 120S470 40 600 110V300H0Z" fill="currentColor"/><path d="M0 190c90-70 180 60 280-10s190-80 320-10v130H0Z" fill="currentColor" opacity=".55"/></svg></section>
+
+<section class="slide"><div class="kicker">INTRODUCTION</div><h2>研修では、こんなことができるようになる</h2><p>生成AIに「作りたいもの」を伝え、職員自身が小さな業務改善ツールを形にします。</p><div class="g3">
+<article class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v4M5 16v-4h14v4"/></svg></div><span class="tag">福祉業務</span><h3>ジェノグラム作成ツール</h3><p>家族関係を画面上で整理し、図として保存できるツール。</p><a class="link" href="https://beeb-c4n.github.io/genogrammaker/genogram.html" target="_blank">サンプルを開く</a></article>
+<article class="card"><div class="icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></svg></div><span class="tag">地域情報</span><h3>お祭りMAP</h3><p>祭りの位置や経路、見どころを地図上で分かりやすく案内。</p><a class="link" href="https://togi-hassaku-sairei.github.io/map/" target="_blank">サンプルを開く</a></article>
+<article class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 9h16M9 9v11"/></svg></div><span class="tag">庁内業務</span><h3>日々の小さな不便を改善</h3><p>添付ファイル保存、LGWAN版画面共有・通話、CSV操作など。</p></article></div></section>
+
+<section class="slide"><div class="kicker">PART 1</div><h2>AIとWebページを作ってみる</h2><p>HTML・CSS・JavaScriptによる静的サイト構築の基礎を、実際に動かしながら学びます。</p><div class="objectives"><div class="objective"><b>1</b><span>Webページが何から作られているかを知る（HTML / CSS / JavaScript）</span></div><div class="objective"><b>2</b><span>生成AIを使ったWebアプリ開発の進め方を体験する</span></div><div class="objective"><b>3</b><span>LGWAN環境でも開発できるローカル環境の作り方をマスターする</span></div></div><div class="tip"><p><strong>前半の到達点：</strong>AIが出力した完全なコードをメモ帳へ貼り、ブラウザで動かせるようになる。</p></div></section>
+
+<section class="slide"><div class="kicker">PREPARATION</div><h2>準備：AIとメモ帳で作るWebページ</h2><p>インターネットから切り離された環境でも、Windows標準の「メモ帳」とブラウザがあればWeb開発は可能です。</p><div class="flow"><div><small>STEP 1</small><h3>AIに指示</h3><p>作りたいページと必要な機能を文章で伝える。</p></div><div><small>STEP 2</small><h3>メモ帳へ貼る</h3><p>生成コードを最初から最後まですべて貼る。</p></div><div><small>STEP 3</small><h3>HTMLで保存</h3><p>index.html、文字コードUTF-8で保存する。</p></div><div><small>STEP 4</small><h3>ブラウザで開く</h3><p>ダブルクリックし、Edgeなどで確認する。</p></div></div><div class="notice"><p><strong>重要：</strong><code>&lt;html&gt;</code>や<code>&lt;body&gt;</code>を含む「完全なコード」が必要です。</p></div></section>
+
+<section class="slide"><div class="kicker">STEP 1</div><h2>HTMLだけでページを作る</h2><p>HTMLはWebページの<strong>骨組み・構造</strong>を作る言語です。まずは装飾のない状態を確認します。</p><div class="split"><div class="codebox"><div class="panel"><span>index.html</span><button class="copy" data-copy="code1">コードをコピー</button></div><pre><code id="code1"></code></pre></div><div class="preview"><div class="panel">ブラウザでの表示</div><iframe id="preview1" class="frame" sandbox="allow-scripts"></iframe></div></div></section>
+
+<section class="slide"><div class="kicker">STEP 2</div><h2>CSSでデザインを追加する</h2><p>CSSはWebページに<strong>色・余白・レイアウト</strong>を与える言語です。内灘町の2色で整えます。</p><div class="split"><div class="codebox"><div class="panel"><span>index.html（HTML + CSS）</span><button class="copy" data-copy="code2">コードをコピー</button></div><pre><code id="code2"></code></pre></div><div class="preview"><div class="panel">ブラウザでの表示</div><iframe id="preview2" class="frame" sandbox="allow-scripts"></iframe></div></div></section>
+
+<section class="slide"><div class="kicker">STEP 3</div><h2>JavaScriptで動きをつける</h2><p>JavaScriptはWebページに<strong>動き・機能</strong>を追加します。AIへの指示では、機能の一般的な名称を知っていると便利です。</p><div class="terms"><div class="term"><b>ハンバーガーメニュー</b><br><span>三本線のボタンでメニューを開閉。</span></div><div class="term"><b>モーダルウィンドウ</b><br><span>画面中央へ小窓を表示。</span></div><div class="term"><b>アコーディオン</b><br><span>見出しを押すと詳細が開閉。</span></div><div class="term"><b>カルーセル／スライダー</b><br><span>複数要素を横に切り替える。</span></div><div class="term"><b>ドラッグ＆ドロップ</b><br><span>要素をつかんで別の場所へ移動。</span></div><div class="term"><b>フィルタリング</b><br><span>条件に一致するデータだけを表示。</span></div></div><div class="tip"><p>指示例：「おすすめ情報を<strong>アコーディオン</strong>で開閉できるようにしてください」</p></div></section>
+
+<section class="slide"><div class="kicker">STEP 3 — PRACTICE</div><h2>HTML + CSS + JavaScript 完成版</h2><p>右側で、メニュー、アコーディオン、モーダル、カルーセルを実際に操作します。</p><div class="split tall"><div class="codebox"><div class="panel"><span>index.html（完成版）</span><button class="copy" data-copy="code3">コードをコピー</button></div><pre><code id="code3"></code></pre></div><div class="preview"><div class="panel">操作できるプレビュー</div><iframe id="preview3" class="frame" sandbox="allow-scripts"></iframe></div></div></section>
+
+<section class="slide"><div class="kicker">STEP 4</div><h2>ディレクトリ構造と画像パス</h2><p>画像を表示するには、HTMLと画像の位置関係を<strong>相対パス</strong>で指定します。</p><div class="g2"><div><h3>1. フォルダ構成を作る</h3><div class="folderbox"><span class="folder">uchinada-project</span><br>├── <span class="file">index.html</span> <span class="comment">… Webページ</span><br>└── <span class="folder">images</span> <span class="comment">… 画像フォルダ</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="file">emblem.png</span> <span class="comment">… 内灘町章</span></div></div><div><h3>2. HTMLから画像を読み込む</h3><p><code>./</code>は「現在のフォルダ」を表します。</p><pre class="path"><code>&lt;img
+  src="./images/emblem.png"
+  alt="内灘町章"
+  style="width:100px;"
+&gt;</code></pre></div></div><div class="notice"><p>表示されないときは、<strong>フォルダ名・ファイル名・拡張子</strong>を順番に確認します。</p></div></section>
+
+<section class="slide"><div class="kicker">MINI EXERCISE</div><h2>ローカルディレクトリの画像を追加する</h2><div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 20"/></svg><div><h3>いま作ったページに、手元の画像を表示しよう</h3><p>町章でも、ご自身で用意した画像でも構いません。</p></div></div><div class="objectives"><div class="objective"><b>1</b><span>index.htmlと同じ場所に<code>images</code>フォルダを作る</span></div><div class="objective"><b>2</b><span><code>images</code>の中に画像ファイルを保存する</span></div><div class="objective"><b>3</b><span>HTMLをAIへ渡し、「ヘッダー左上に<code>./images/ファイル名.png</code>を表示したい」と指示する</span></div></div><div class="tip"><p>画像がJPGなら拡張子も<code>.jpg</code>に合わせ、<strong>表示位置と大きさ</strong>も伝えます。</p></div></section>
+
+<section class="slide"><div class="kicker">EXERCISE 1</div><h2>内灘町の「食」をPRするHPを作る</h2><div class="g2"><div><div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 13h6M9 16h6"/></svg><div><h3>生成AIへ渡すプロンプトを作成</h3><p>文章・画像・配色・機能を具体的に指定します。</p></div></div><ul class="req"><li>内灘餅、砂丘の真珠（らっきょう）、ミルクの画像を計3枚挿入</li><li>第一カラー<strong>#196DAC</strong>、第二カラー<strong>#186845</strong></li><li>LGWANでも使える単一の完全なHTMLコード</li></ul><div class="tools"><a class="link" href="https://www.town.uchinada.lg.jp/life/4/18/118/" target="_blank">内灘町公式「うちなだの食」</a></div></div><div><div class="panel" style="background:#edf3f6;color:#183244;border-radius:9px 9px 0 0"><span>説明文（そのままAIへ渡せます）</span><button class="copy" data-copy="food">文章をコピー</button></div><textarea id="food" class="prompt" readonly>砂丘地で穫れる落花生をふんだんに入れた、優しい甘さの「ピーナッツ餅」は、内灘町の西荒屋地区で昔から子どもたちに愛されてきたおやつです。
+
+昔ながらの味を絶やさないよう、西荒屋地区の地域おこし団体「西荒屋営農促進会」のメンバーが、「内灘餅」として、ひとつひとつ丁寧に手作業で製造・販売しています。ピーナッツも餅米もMade in 内灘。風味豊かな食感と優しい甘さが特徴です。
+
+内灘砂丘で採れた3年子らっきょうは、ひと粒ひと粒、手作業で丁寧に皮を取り酢漬けしており、シャキシャキとした歯ごたえが特徴です。「おいCまち内灘」は、無農薬・非化学肥料を使用し、町内の高校生や高齢者の方とも連携して加工・販売を行っています。
+
+内灘町は日本海に面し、河北潟や内灘砂丘が広がる町です。河北潟干拓地では酪農が営まれ、令和5年度には石川県の牛乳生産量の61%を内灘町産が占めています。
+
+「ミルク王国ウチナダ」では、内灘町のミルクでおもてなしする店を「ミルク王国の店」として認定し、各店がオリジナル商品を提供しています。</textarea></div></div></section>
+
+<section class="slide"><div class="kicker">EXERCISE 2</div><h2>業務効率化につながるWebアプリを作る</h2><p>CSVファイルをドラッグ＆ドロップで読み込み、性別・年代・地区で絞り込み、結果をCSV出力するツールを作りましょう。</p><div class="g2"><div><div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3h12l4 4v14H4zM16 3v5h5M8 13h8M8 17h8M8 9h3"/></svg><div><h3>演習で作るもの</h3><p>「CSV取込」「絞り込み」「CSV出力」が1画面で動くWebアプリ。</p></div></div><ul class="req"><li>CSVをドラッグ＆ドロップで読み込む</li><li>性別、年代、地区で複数条件の絞り込み</li><li>件数と一覧を画面に表示</li><li>絞り込み結果をUTF-8 BOM付きCSVで出力</li></ul><div class="tools"><button class="action green" id="sample">演習用CSVをダウンロード</button><button class="action" id="open-prompt">プロンプト例を見る</button></div><div class="tip"><p>左のプロンプト例をAIへ渡し、生成された完全なHTMLをメモ帳へ保存して動かします。</p></div></div><div class="demo"><div class="demo-head"><h3>完成イメージ（操作できます）</h3><span class="app-badge">CSV FILTER APP</span></div><label class="dropzone" id="dropzone" for="csv-input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 15v5h16v-5"/></svg><span><b>CSVファイルをここにドロップ</b><small>またはクリックしてファイルを選択（UTF-8）</small></span></label><input type="file" id="csv-input" accept=".csv,text/csv" hidden><div class="file-status" id="file-status">現在は演習用サンプルデータを表示しています。</div><div class="filters"><label>性別<select id="gender"><option value="">すべて</option></select></label><label>年代<select id="age"><option value="">すべて</option><option value="0">20歳未満</option><option value="20">20〜39歳</option><option value="40">40〜59歳</option><option value="60">60歳以上</option></select></label><label>地区<select id="district"><option value="">すべて</option></select></label></div><div class="count" id="count"></div><div class="tablewrap"><table class="mini"><thead><tr><th>氏名</th><th>地区</th><th>生年月日</th><th>性別</th></tr></thead><tbody id="tbody"></tbody></table></div><div class="tools"><button class="action" id="filtered">絞り込み結果をCSV出力</button></div></div></div><div class="prompt-modal" id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="prompt-title"><div class="modal-card-main"><div class="modal-title"><div><div class="kicker">PROMPT EXAMPLE</div><h3 id="prompt-title">このWebアプリを作るためのプロンプト例</h3></div><button class="close-modal" id="close-prompt" aria-label="閉じる">×</button></div><pre class="prompt-code" id="csv-prompt">LGWAN環境のパソコンで、ブラウザだけで動くCSV絞り込みWebアプリを作ってください。
+
+【出力形式】
+・HTML、CSS、JavaScriptをすべて1つにまとめた、完全な単一HTMLコードにする
+・外部ライブラリ、CDN、外部フォントは使わず、インターネット接続なしで動作させる
+・文字コードはUTF-8とする
+
+【必要な機能】
+・CSVファイルを画面へドラッグ＆ドロップして読み込めるようにする
+・クリックによるファイル選択にも対応する
+・CSVの列は「氏名、住所、生年月日、性別、世帯区分」を想定する
+・読み込んだCSVを表形式で一覧表示する
+・性別、年代、住所から判定した地区で複数条件の絞り込みができるようにする
+・地区と性別の選択肢は、読み込んだCSVの内容から自動生成する
+・絞り込み後の件数を表示する
+・絞り込み結果をUTF-8 BOM付きCSVとしてダウンロードできるようにする
+・CSVの引用符やカンマを正しく扱う
+・必須列がない場合やCSVを読み込めない場合は、分かりやすいエラーを表示する
+
+【デザイン】
+・第一カラーは #196DAC、第二カラーは #186845
+・白を基調に、自治体職員が業務で使いやすい、シンプルで見やすい画面にする
+・ドラッグ＆ドロップ領域、絞り込み欄、件数、データ表、CSV出力ボタンを1画面に配置する
+・パソコンとスマートフォンの両方で見やすくする</pre><div class="modal-actions"><button class="action green copy" data-copy="csv-prompt">プロンプトをコピー</button><button class="action" id="close-prompt-bottom">閉じる</button></div></div></div></section>
+
+</main>
+<footer class="nav"><div class="navleft"><button class="navbtn" id="prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>前へ</button><button class="navbtn save" id="save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>HTML保存</button></div><div class="progress"><span id="label"></span><div class="bar"><span id="bar"></span></div></div><div class="navright"><button class="navbtn primary" id="next">次へ<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div></footer>
+</div>
+<script>
+const code1=`<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>内灘町の紹介</title>
+</head>
+<body>
+  <h1>内灘町の紹介</h1>
+  <p>海と砂丘、河北潟に囲まれた町です。</p>
+  <h2>おすすめポイント</h2>
+  <ul>
+    <li>内灘海岸と内灘砂丘</li>
+    <li>サンセットブリッジ内灘</li>
+    <li>内灘餅とミルク王国ウチナダ</li>
+  </ul>
+  <button>詳細を見る</button>
+</body>
+</html>`;
+const code2=`<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>内灘町の紹介 - CSS版</title>
+  <style>
+    body{font-family:sans-serif;background:#eef6fb;padding:20px;color:#253746}
+    h1{color:#196DAC;border-bottom:3px solid #196DAC}
+    ul{background:white;padding:20px 40px;border-radius:8px;
+       border-left:5px solid #186845;box-shadow:0 2px 6px #0002}
+    button{background:#186845;color:white;font-weight:bold;border:0;
+           padding:10px 20px;border-radius:4px;cursor:pointer}
+  <\/style>
+</head>
+<body>
+  <h1>内灘町の紹介</h1>
+  <p>海と砂丘、河北潟に囲まれた町です。</p>
+  <h2>おすすめポイント</h2>
+  <ul><li>内灘海岸と内灘砂丘</li><li>サンセットブリッジ内灘</li><li>内灘餅とミルク王国ウチナダ</li></ul>
+  <button>詳細を見る</button>
+</body>
+</html>`;
+const code3=`<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>内灘町の紹介 - 完成版</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:sans-serif;color:#253746;background:#eef6fb}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;color:white;background:#196DAC}
+h1{margin:0;font-size:1.3rem}h2{color:#196DAC;border-bottom:2px solid #196DAC}
+.menu{border:0;color:white;background:transparent;font-size:25px;cursor:pointer}
+nav{display:none;padding:10px 18px;color:white;background:#186845}nav.open{display:block}nav span{margin-right:20px}main{padding:18px}
+.at{margin-top:8px;padding:11px;cursor:pointer;background:white;border:1px solid #186845}.ac{display:none;padding:11px;background:white;border:1px solid #186845;border-top:0}.ac.show{display:block}
+.btn{margin:14px 0;padding:9px 14px;border:0;border-radius:4px;color:white;background:#186845;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:#0008}.modal.show{display:flex}.modal-card{width:min(330px,90%);padding:22px;border-radius:8px;background:white;text-align:center}
+.carousel{overflow:hidden;border-radius:7px}.track{display:flex;transition:.3s}.item{min-width:100%;padding:28px 10px;color:white;text-align:center;font-weight:bold}.controls button{margin-top:7px;padding:7px 11px;color:white;border:0;background:#253746;cursor:pointer}
+<\/style>
+</head>
+<body>
+<header><h1>内灘町の紹介</h1><button class="menu" onclick="toggleMenu()">≡</button></header>
+<nav id="nav"><span>トップ</span><span>観光</span><span>特産品</span></nav>
+<main><p>海と砂丘、河北潟に囲まれた町です。</p><h2>おすすめポイント</h2>
+<div class="at" onclick="toggleAcc(this)">内灘海岸を見る ▼</div><div class="ac">日本海に沈む夕日と、広い砂浜を楽しめます。</div>
+<div class="at" onclick="toggleAcc(this)">河北潟を見る ▼</div><div class="ac">干拓地では、酪農や農業が営まれています。</div>
+<button class="btn" onclick="openModal()">重要なお知らせを見る</button><h2>内灘ハイライト</h2>
+<div class="carousel"><div class="track" id="track"><div class="item" style="background:#196DAC">サンセットブリッジ内灘</div><div class="item" style="background:#186845">内灘餅</div><div class="item" style="background:#b68a3c">ミルク王国ウチナダ</div></div></div>
+<div class="controls"><button onclick="move(-1)">前へ</button> <button onclick="move(1)">次へ</button></div></main>
+<div class="modal" id="modal"><div class="modal-card"><h3>内灘町からのお知らせ</h3><p>詳細情報をここに表示します。</p><button class="btn" onclick="closeModal()">閉じる</button></div></div>
+<script>
+function toggleMenu(){document.getElementById('nav').classList.toggle('open')}
+function toggleAcc(el){el.nextElementSibling.classList.toggle('show')}
+function openModal(){document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+let current=0;function move(d){current=(current+d+3)%3;document.getElementById('track').style.transform='translateX(-'+current*100+'%)'}
+<\/script></body></html>`;
+[['code1','preview1',code1],['code2','preview2',code2],['code3','preview3',code3]].forEach(([c,p,v])=>{document.getElementById(c).textContent=v;document.getElementById(p).srcdoc=v});
+const slides=[...document.querySelectorAll('.slide')],prev=document.getElementById('prev'),next=document.getElementById('next'),label=document.getElementById('label'),bar=document.getElementById('bar');let page=0;
+function show(i){page=Math.max(0,Math.min(i,slides.length-1));slides.forEach((s,n)=>s.classList.toggle('active',n===page));prev.disabled=page===0;next.disabled=page===slides.length-1;label.textContent=(page+1)+' / '+slides.length;bar.style.width=((page+1)/slides.length*100)+'%';slides[page].scrollTop=0}
+prev.onclick=()=>show(page-1);next.onclick=()=>show(page+1);document.addEventListener('keydown',e=>{if(['TEXTAREA','SELECT','INPUT'].includes(document.activeElement.tagName))return;if(e.key==='ArrowRight'||e.key==='PageDown')show(page+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(page-1);if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const t=document.getElementById(b.dataset.copy),text=t.value!==undefined?t.value:t.textContent;try{await navigator.clipboard.writeText(text)}catch(_){const a=document.createElement('textarea');a.value=text;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}const old=b.textContent;b.textContent='コピーしました';b.classList.add('done');setTimeout(()=>{b.textContent=old;b.classList.remove('done')},1300)});
+const sampleRows=[['内灘 太郎','石川県河北郡内灘町字大根布','1980/05/10','男','世帯主'],['河北 花子','石川県河北郡内灘町字鶴ケ丘','1985/11/22','女','世帯員'],['砂丘 次郎','石川県河北郡内灘町字向陽台','1972/03/15','男','世帯主'],['白帆 節子','石川県河北郡内灘町字白帆台','1955/08/30','女','世帯員'],['大根布 健一','石川県河北郡内灘町字大根布','1990/01/12','男','世帯主'],['鶴ケ丘 さくら','石川県河北郡内灘町字鶴ケ丘','2015/04/05','女','世帯員'],['向陽 雄大','石川県河北郡内灘町字向陽台','1982/12/01','男','世帯主'],['大学 恵美','石川県河北郡内灘町字大学','1998/07/19','女','世帯員'],['宮坂 浩二','石川県河北郡内灘町字宮坂','1960/10/10','男','世帯主'],['白帆 幸子','石川県河北郡内灘町字白帆台','1982/06/15','女','世帯員']];let rows=sampleRows.slice(),result=rows.slice();
+const genderFilter=document.getElementById('gender'),ageFilter=document.getElementById('age'),districtFilter=document.getElementById('district'),tableBody=document.getElementById('tbody'),resultCount=document.getElementById('count'),dropzone=document.getElementById('dropzone'),csvInput=document.getElementById('csv-input'),fileStatus=document.getElementById('file-status');
+function years(s){const b=new Date(s.replaceAll('/','-')),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a}
+function districtOf(address){const known=['大根布','鶴ケ丘','向陽台','白帆台','大学','宮坂','西荒屋','室','湖西','千鳥台','向粟崎'];return known.find(v=>String(address).includes(v))||String(address).replace(/^.*?内灘町字?/,'').replace(/[0-9０-９丁目番地号\-ー].*$/,'')||'その他'}
+function setOptions(select,values){select.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='すべて';select.appendChild(all);[...new Set(values.filter(Boolean))].sort().forEach(v=>{const option=document.createElement('option');option.value=v;option.textContent=v;select.appendChild(option)})}
+function refreshOptions(){setOptions(genderFilter,rows.map(r=>r[3]));setOptions(districtFilter,rows.map(r=>districtOf(r[1])));ageFilter.value=''}
+function filter(){const g=genderFilter.value,a=ageFilter.value,d=districtFilter.value;result=rows.filter(r=>{const y=years(r[2]);let ok=true;if(a==='0')ok=y<20;if(a==='20')ok=y>=20&&y<40;if(a==='40')ok=y>=40&&y<60;if(a==='60')ok=y>=60;return(!g||r[3]===g)&&(!d||districtOf(r[1])===d)&&ok});tableBody.replaceChildren();result.forEach(r=>{const tr=document.createElement('tr');[r[0],districtOf(r[1]),r[2],r[3]].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});tableBody.appendChild(tr)});resultCount.textContent=result.length+'件を表示'}
+function parseCSV(text){const matrix=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++}else if(c==='"'){quoted=!quoted}else if(c===','&&!quoted){row.push(cell);cell=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell);if(row.some(v=>v!==''))matrix.push(row);row=[];cell=''}else{cell+=c}}row.push(cell);if(row.some(v=>v!==''))matrix.push(row);if(!matrix.length)throw new Error('CSVにデータがありません');matrix[0][0]=matrix[0][0].replace(/^\uFEFF/,'');const header=matrix.shift().map(v=>v.trim()),required=['氏名','住所','生年月日','性別','世帯区分'],index=required.map(v=>header.indexOf(v));if(index.some(v=>v<0))throw new Error('必要な列（氏名、住所、生年月日、性別、世帯区分）が見つかりません');return matrix.filter(r=>r.some(Boolean)).map(r=>index.map(i=>(r[i]||'').trim()))}
+function loadFile(file){if(!file||!file.name.toLowerCase().endsWith('.csv')){fileStatus.textContent='CSVファイルを選択してください。';return}const reader=new FileReader();reader.onload=()=>{try{rows=parseCSV(String(reader.result));result=rows.slice();refreshOptions();filter();fileStatus.textContent=file.name+' を読み込みました（'+rows.length+'件）'}catch(e){fileStatus.textContent='読み込みエラー：'+e.message}};reader.onerror=()=>fileStatus.textContent='ファイルを読み込めませんでした。';reader.readAsText(file,'UTF-8')}
+[genderFilter,ageFilter,districtFilter].forEach(x=>x.onchange=filter);['dragenter','dragover'].forEach(name=>dropzone.addEventListener(name,e=>{e.preventDefault();dropzone.classList.add('dragover')}));['dragleave','drop'].forEach(name=>dropzone.addEventListener(name,e=>{e.preventDefault();dropzone.classList.remove('dragover')}));dropzone.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));csvInput.addEventListener('change',()=>loadFile(csvInput.files[0]));
+function csv(rs,name){const all=[['氏名','住所','生年月日','性別','世帯区分'],...rs],text=all.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n'),blob=new Blob([new Uint8Array([239,187,191]),text],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+const promptModal=document.getElementById('prompt-modal');function closePrompt(){promptModal.classList.remove('open')}document.getElementById('open-prompt').onclick=()=>promptModal.classList.add('open');document.getElementById('close-prompt').onclick=closePrompt;document.getElementById('close-prompt-bottom').onclick=closePrompt;promptModal.addEventListener('click',e=>{if(e.target===promptModal)closePrompt()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closePrompt()});
+document.getElementById('sample').onclick=()=>csv(sampleRows,'uchinada_sample_data.csv');document.getElementById('filtered').onclick=()=>csv(result,'uchinada_filtered_data.csv');document.getElementById('save').onclick=()=>{const blob=new Blob(['<!DOCTYPE html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='uchinada_vibe_coding_training.html';a.click();URL.revokeObjectURL(a.href)};refreshOptions();filter();show(0);
+</script>
+</body>
+</html>
