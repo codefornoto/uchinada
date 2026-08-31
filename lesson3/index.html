@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>#3 AIとマップアプリを作ってみる｜内灘町役場</title>
+<style>
+:root{--blue:#196dac;--blue2:#0f5688;--green:#186845;--sand:#d9b86c;--pale:#eef5f8;--ink:#183244;--muted:#617685;--line:#d7e3e9;--code:#17232b;--red:#b44848;--amber:#d8911e;--cyan:#2b8ead}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{overflow:hidden;color:var(--ink);background:linear-gradient(180deg,#e6f1f7,transparent 22%),var(--pale);font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,Arial,sans-serif;line-height:1.65}button,a{font:inherit}.app{height:100%;display:grid;grid-template-rows:68px minmax(0,1fr) 64px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:8px 26px;background:#fff;border-bottom:3px solid var(--green);box-shadow:0 3px 14px #11445e14;z-index:3}.top strong{display:block;color:var(--blue);line-height:1.3}.top small{display:block;color:var(--muted);letter-spacing:.04em}.brand{display:flex;align-items:center;gap:10px;color:var(--green);font-size:.82rem;font-weight:800}.emblem{width:44px;height:50px;object-fit:contain}
+.stage{min-height:0;padding:24px}.slide{display:none;width:min(1360px,100%);height:100%;margin:auto;overflow:auto;padding:clamp(24px,3vw,46px);background:#fff;border:1px solid #196dac29;border-top:5px solid var(--blue);border-radius:15px;box-shadow:0 12px 35px #1245611c;scrollbar-width:thin}.slide.active{display:block;animation:enter .2s ease-out}@keyframes enter{from{opacity:0;transform:translateY(5px)}}
+.kicker{color:var(--blue);font-size:.78rem;font-weight:900;letter-spacing:.14em}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(2.1rem,4.6vw,4.7rem);line-height:1.16;letter-spacing:-.04em}h2{font-size:clamp(1.6rem,2.7vw,2.6rem);line-height:1.3;color:var(--blue);margin-bottom:18px}h2:after{content:"";display:block;width:72px;height:4px;margin-top:12px;background:var(--green);border-radius:9px}h3{font-size:1.12rem;line-height:1.4}strong{color:var(--blue2)}code{font-family:Consolas,"Courier New",monospace}.inline{padding:2px 5px;border-radius:4px;background:#e9f0f4;color:var(--blue2)}
+.cover{position:relative;align-items:center;overflow:hidden;background:radial-gradient(circle at 88% 14%,#18684520,transparent 26%),linear-gradient(135deg,#fff 0 62%,#eaf4f8 62%)}.cover.active{display:flex}.cover-copy{max-width:930px;position:relative;z-index:1}.eyebrow{display:flex;align-items:center;gap:9px;color:var(--blue);font-weight:900;letter-spacing:.08em}.eyebrow:before{content:"";width:28px;height:3px;background:var(--green)}.cover h1 span{color:var(--blue)}.subtitle{max-width:760px;color:var(--muted);font-size:clamp(1rem,1.7vw,1.35rem)}.goal{display:inline-flex;align-items:center;gap:13px;margin-top:25px;padding:16px 22px;border-left:5px solid var(--green);background:#fff;box-shadow:0 8px 22px #1868451c;font-weight:900}.goal svg{width:27px;color:var(--green)}.map-art{position:absolute;right:2%;bottom:2%;width:39%;min-width:330px;opacity:.15;color:var(--blue)}
+.g2,.g3,.g4{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.card{min-width:0;padding:20px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 14px #1348630f}.card h3{margin-bottom:8px}.card p{margin-bottom:8px;color:var(--muted);font-size:.9rem}.icon{display:grid;place-items:center;width:46px;height:46px;margin-bottom:14px;border-radius:11px;color:#fff;background:var(--blue)}.icon.green{background:var(--green)}.icon.sand{background:#a77a22}.icon svg{width:25px}.tag{display:inline-block;padding:3px 9px;border-radius:99px;background:#e8f3ed;color:var(--green);font-size:.72rem;font-weight:900}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 13px;border:0;border-radius:7px;color:#fff;background:var(--blue);cursor:pointer;font-size:.8rem;font-weight:900;text-decoration:none}.action:hover{background:var(--blue2)}.action.green{background:var(--green)}.action.light{color:var(--blue);border:1px solid var(--line);background:#fff}.action.danger{background:var(--red)}.action svg{width:17px}.tools{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}.link{color:var(--blue);font-weight:800}
+.objectives{display:grid;gap:14px;margin-top:24px}.objective{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:15px;padding:16px 19px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;background:#fbfdfe}.objective b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;color:#fff;background:var(--green)}.objective span{font-weight:800}.tip,.notice,.warning,.dangerbox{margin-top:18px;padding:14px 17px;border-left:5px solid var(--green);border-radius:9px;background:#e8f3ed}.notice{border-color:var(--blue);background:#eef6fb}.warning{border-color:var(--amber);background:#fff7e8}.dangerbox{border-color:var(--red);background:#fff0f0}.tip p,.notice p,.warning p,.dangerbox p{margin:0;font-size:.9rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}.step{position:relative;padding:18px;border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:11px;background:#fff}.step b{display:block;color:var(--blue);font-size:1.15rem}.step small{color:var(--muted)}.step:not(:last-child):after{content:"→";position:absolute;right:-12px;top:42%;z-index:2;color:var(--green);font-size:1.25rem;font-weight:900}
+.security{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:stretch}.lock{display:grid;place-items:center;min-height:290px;border-radius:14px;color:#fff;background:linear-gradient(145deg,var(--blue),var(--green))}.lock svg{width:110px}.dont{display:grid;gap:11px}.dont-row{display:flex;gap:13px;align-items:flex-start;padding:13px;border:1px solid #edc8c8;border-radius:9px;background:#fff7f7}.dont-row b{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;color:#fff;background:var(--red)}
+.split-view{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:18px;align-items:stretch}.code-wrapper,.preview-wrapper{height:470px;overflow:hidden;border:1px solid #2b3f4b;border-radius:11px;background:var(--code)}.code-header,.preview-header{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:8px 12px;color:#dceaf0;background:#223640;font-size:.78rem;font-weight:800}.preview-header{background:var(--blue)}pre{margin:0}.code-wrapper pre{height:calc(100% - 44px);overflow:auto;padding:15px;color:#e2eef2;font:12px/1.58 Consolas,"Yu Gothic",monospace;white-space:pre}.code-wrapper code{font:inherit}.preview-frame{display:block;width:100%;height:calc(100% - 44px);border:0;background:#f5f8fa}.copy-mini{padding:4px 9px;border:1px solid #66808e;border-radius:5px;color:#fff;background:transparent;cursor:pointer;font-size:.72rem}
+.concepts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.concept{padding:22px;border:1px solid var(--line);border-radius:12px;background:#fff}.concept:nth-child(1){border-top:5px solid var(--blue)}.concept:nth-child(2){border-top:5px solid var(--green)}.concept:nth-child(3){border-top:5px solid var(--sand)}.concept svg{width:38px;color:var(--blue)}.concept p{color:var(--muted);font-size:.88rem}.flow{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:20px;flex-wrap:wrap}.flow span{padding:12px 16px;border-radius:9px;background:#edf3f6;font-weight:900}.flow b{color:var(--green);font-size:1.35rem}
+.download-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:center;padding:25px;border-radius:14px;color:#fff;background:linear-gradient(145deg,var(--blue),#2c86bc)}.download-card h3{font-size:1.55rem}.download-card p{color:#e9f6fb}.filecard{padding:20px;border-radius:11px;color:var(--ink);background:#fff}.filecard code{display:block;margin:8px 0 14px;padding:9px;border-radius:7px;background:#edf3f6}.data-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.data-stat{padding:12px;border-radius:9px;text-align:center;background:#eef6fb}.data-stat b{display:block;font-size:1.55rem}.schema{width:100%;border-collapse:collapse;font-size:.82rem}.schema th,.schema td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}.schema th{color:#fff;background:var(--blue)}.schema td:nth-child(1){font-family:Consolas,monospace;color:var(--blue2)}
+.folder{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;align-items:center;padding:22px;border-radius:12px;color:#dceaf0;background:var(--code);font:14px/1.5 Consolas,"Yu Gothic",monospace}.folder svg{width:20px;color:var(--sand)}.folder .indent{margin-left:26px}.folder-note{color:#92aab6;font-size:.78rem}
+.capstone{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,var(--blue),#123f5d 60%,var(--green))}.capstone.active{display:flex;align-items:center}.capstone h2{color:#fff;font-size:clamp(2.2rem,4vw,4rem)}.capstone h2:after{background:var(--sand)}.capstone p{max-width:780px;color:#dfeef4;font-size:1.15rem}.capstone .kicker{color:#bfe8d4}.capstone .goal{color:var(--ink)}.target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.target{padding:17px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px}.target b{display:block;color:var(--blue)}.target p{margin:6px 0 0;color:var(--muted);font-size:.84rem}
+.voice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.voice-card{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:10px;background:#fbfdfe}.voice-card.fire{border-left-color:var(--red)}.voice-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:#fff;background:var(--blue)}.voice-card.fire .voice-icon{background:var(--red)}.voice-icon svg{width:23px}.voice-name{color:var(--green);font-size:.75rem;font-weight:900}.voice-card.fire .voice-name{color:var(--red)}.voice-text{font-size:.87rem}
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.check{display:flex;gap:11px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:9px}.check i{display:grid;place-items:center;width:25px;height:25px;flex:none;border-radius:50%;color:#fff;background:var(--green);font-style:normal;font-weight:900}.check span{font-size:.88rem}
+.modal{display:none;position:fixed;inset:0;z-index:50;align-items:center;justify-content:center;padding:20px;background:#102c3dbf}.modal.open{display:flex}.modal-card{width:min(780px,96vw);max-height:86vh;overflow:auto;padding:24px;border-top:5px solid var(--blue);border-radius:13px;background:#fff;box-shadow:0 24px 70px #0005}.modal-title{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.modal-title h3{margin:0;color:var(--blue);font-size:1.35rem}.close-modal{display:grid;place-items:center;width:34px;height:34px;flex:none;border:1px solid var(--line);border-radius:50%;color:var(--muted);background:#fff;cursor:pointer;font-size:1.25rem}.modal-body{margin:15px 0}.modal-body pre{padding:16px;overflow:auto;border-radius:9px;color:#e7f0f3;background:var(--code);font:12px/1.65 Consolas,"Yu Gothic",monospace;white-space:pre-wrap}.modal-actions{display:flex;justify-content:flex-end;gap:8px}
+.nav{display:grid;grid-template-columns:1fr minmax(220px,420px) 1fr;align-items:center;gap:18px;padding:9px 24px;background:#fff;border-top:1px solid var(--line);z-index:3}.navleft,.navright{display:flex;gap:8px}.navright{justify-content:flex-end}.navbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:92px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;color:var(--blue);background:#fff;cursor:pointer;font-size:.82rem;font-weight:900}.navbtn.primary{color:#fff;background:var(--blue);border-color:var(--blue)}.navbtn:disabled{opacity:.35}.navbtn svg{width:16px}.progress{text-align:center;color:var(--muted);font-size:.73rem;font-weight:800}.bar{height:5px;margin-top:5px;overflow:hidden;border-radius:9px;background:#dce8ed}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:.2s}.save{min-width:auto;color:var(--green)}
+@media(max-width:980px){.app{grid-template-rows:60px 1fr 60px}.stage{padding:12px}.slide{padding:23px 20px}.split-view{grid-template-columns:1fr}.code-wrapper,.preview-wrapper{height:390px}.g3,.g4,.steps,.target-grid{grid-template-columns:repeat(2,1fr)}.security,.download-card{grid-template-columns:1fr}.top small,.brand span{display:none}.nav{grid-template-columns:1fr 1fr}.progress{display:none}}
+@media(max-width:600px){.g2,.g3,.g4,.steps,.concepts,.target-grid,.voice-grid,.check-grid{grid-template-columns:1fr}.top{padding:7px 14px}.emblem{width:35px;height:41px}.stage{padding:8px}.slide{padding:19px 16px;border-radius:9px}.nav{padding:7px 10px;gap:7px}.navbtn{min-width:0;width:100%;padding:8px}.save{display:none}.step:after{display:none}.split-view{grid-template-columns:1fr}.preview-wrapper{min-height:340px}.map-art{opacity:.08}.data-stats{grid-template-columns:1fr}}
+@media print{body{overflow:visible;background:#fff}.app{display:block;height:auto}.top,.nav{display:none}.stage{padding:0}.slide,.slide.active,.cover,.cover.active,.capstone,.capstone.active{display:block;width:100%;height:100vh;break-after:page;border:0;border-radius:0;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><strong>#3 AIとマップアプリを作ってみる</strong><small>Leafletを使ったWeb GISとオープンデータの活用｜内灘町役場</small></div><div class="brand"><span>内灘町役場</span><img class="emblem" alt="内灘町章" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNDI0IiB3aWR0aD0iMzYwIj48cGF0aCBkPSJNMTc5Ljk3MyA3Mi43MzJjLTYyLjc0OCAwLTExNy41NTYgMzMuODkzLTE0Ny4xNDkgODQuMzgzIDEuMTM5IDE0LjEyIDYuNTIgNTUuOTY2IDMwLjkxNiA3MS43MDcgNy4xMS01Ny44ODcgNTYuNDI4LTEwMi43NCAxMTYuMjMzLTEwMi43NCA2NC42OTIgMCAxMTcuMjI2IDUyLjQ4IDExNy4yMjYgMTE3LjE3MiAwIDY0LjY5Mi01Mi41MzQgMTE3LjExOS0xMTcuMjI2IDExNy4xMTktNTkuODA2IDAtMTA5LjEyNS00NC44MDctMTE2LjIzNS0xMDIuNjg4LTkuOTk3LTYuMjExLTM4Ljk3LTI3LjMxNy00NS45ODgtNjYuOTQ3LTUuMzQ1IDE2LjU0My04LjI0NCAzNC4xODctOC4yNDQgNTIuNTE2IDAgOTQuMTYxIDc2LjMwNSAxNzAuNTIzIDE3MC40NjcgMTcwLjUyMyA5NC4yMTUgMCAxNzAuNTc2LTc2LjM2MiAxNzAuNTc2LTE3MC41MjMgMC05NC4yMTYtNzYuMzYtMTcwLjUyMi0xNzAuNTc2LTE3MC41MjJ6bS4xMDgtNjEuODE1Yy00MS4wMyAwLTc1LjU0NiAyOC4wNTktODUuMjA2IDY2LjA1QzEyMC42IDY0LjEwMyAxNDkuNjg5IDU2LjgzIDE4MC40MDcgNTYuODNjMzAuNDQ2IDAgNTkuMjEgNy4xMSA4NC43NzIgMTkuNy05Ljg3Ny0zNy43NzItNDQuMjg1LTY1LjYxNC04NS4wOTgtNjUuNjE0IiBmaWxsPSIjMGY2NjQ1Ii8+PC9zdmc+"></div></header>
+<main class="stage">
+
+<section class="slide cover active"><div class="cover-copy"><p class="eyebrow">内灘町役場 バイブコーディング研修 #3</p><h1>AIと<br><span>マップアプリを作ってみる</span></h1><p class="subtitle">Leafletを使ったWeb GISと、内灘町オープンデータの活用</p><div class="goal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg>地図・データ・公開URLを、ひとつのWebアプリにつなげる</div></div><svg class="map-art" viewBox="0 0 500 360" fill="none" stroke="currentColor" stroke-width="5"><path d="M35 68 152 20l110 48 115-48 88 43v260l-88-43-115 48-110-48-117 48V68Z"/><path d="M152 20v260M262 68v260M377 20v260"/><path d="M278 144c0-39 31-70 70-70s70 31 70 70c0 54-70 120-70 120s-70-66-70-120Z"/><circle cx="348" cy="144" r="23"/></svg></section>
+
+<section class="slide"><div class="kicker">TODAY</div><h2>本日の内容</h2><div class="g3"><article class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M4 14v6h16v-6"/></svg></div><span class="tag">公開する</span><h3>GitHub Pages</h3><p>作ったHTML・CSVを、自分のURLで世界に公開します。</p></article><article class="card"><div class="icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15M15 6v15"/></svg></div><span class="tag">地図を動かす</span><h3>Leaflet + OSM</h3><p>ズーム、マーカー、ポップアップ、線、レイヤ切替を体験します。</p></article><article class="card"><div class="icon sand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div><span class="tag">データを載せる</span><h3>内灘町オープンデータ</h3><p>公衆トイレCSVを読み込み、17地点を地図にプロットします。</p></article></div><div class="flow"><span>HTMLを作る</span><b>→</b><span>CSVを置く</span><b>→</b><span>GitHubへ送る</span><b>→</b><span>URLで確認</span></div></section>
+
+<section class="slide"><div class="kicker">STEP 1</div><h2>GitHub Pagesでホスティング</h2><p>GitHub Pagesは、リポジトリに置いたHTML・CSS・JavaScriptなどの静的ファイルをWebサイトとして公開できるサービスです。</p><div class="steps"><div class="step"><b>01 Repository</b><small>新しいリポジトリを作る</small></div><div class="step"><b>02 Upload</b><small>index.htmlとCSVを置く</small></div><div class="step"><b>03 Settings</b><small>Pagesの公開元を設定</small></div><div class="step"><b>04 Open URL</b><small>発行されたURLを開く</small></div></div><div class="g2" style="margin-top:22px"><div class="notice" style="margin-top:0"><p><strong>公開URLの例</strong><br><code>https://ユーザー名.github.io/リポジトリ名/</code></p></div><div class="card"><h3>なぜGitHub Pagesを使う？</h3><p>特別なサーバを用意せず、更新履歴を残しながらWebアプリを共有できます。URLを知っている人は、PCやスマートフォンからアクセスできます。</p></div></div><div class="tools"><a class="action light" href="https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank">GitHub公式手順</a></div></section>
+
+<section class="slide"><div class="kicker">SECURITY</div><h2>公開前に確認する、超重要事項</h2><div class="security"><div class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div><div><p>GitHub Pagesで公開した画面だけでなく、公開リポジトリの<strong>ソースコードやデータも世界中から閲覧できます。</strong></p><div class="dont"><div class="dont-row"><b>×</b><div><strong>個人情報を含めない</strong><br><small>本名、電話番号、住所、非公開の業務データなど</small></div></div><div class="dont-row"><b>×</b><div><strong>秘密情報をコードへ書かない</strong><br><small>APIキー、パスワード、アクセストークンなど</small></div></div><div class="dont-row"><b>×</b><div><strong>「URLを知られなければ安全」と考えない</strong><br><small>公開したファイルは検索・共有・複製される可能性があります</small></div></div></div><button class="action danger" style="margin-top:14px" data-modal="security">公開前チェックを開く</button></div></div></section>
+
+<section class="slide"><div class="kicker">STEP 2</div><h2>LeafletとOpenStreetMapを知ろう</h2><div class="concepts"><div class="concept"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 9h16M9 9v11"/></svg><h3>Leaflet</h3><p>Webページ上で地図を操作するためのJavaScriptライブラリ。マーカーや線、ポップアップなどを追加できます。</p><a class="link" href="https://leafletjs.com/reference.html" target="_blank">公式リファレンス</a></div><div class="concept"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><h3>OpenStreetMap</h3><p>世界中の人が編集するオープンな地理データ。Leafletでは背景地図のタイルとして表示できます。</p><a class="link" href="https://www.openstreetmap.org/copyright" target="_blank">著作権とライセンス</a></div><div class="concept"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5 7-12a7 7 0 0 0-14 0c0 7 7 12 7 12Z"/><circle cx="12" cy="9" r="2"/></svg><h3>Web GIS</h3><p>地理情報をWeb上で表示・検索・分析する仕組み。位置情報と行政データを結び付けられます。</p></div></div><div class="warning"><p><strong>OpenStreetMapの帰属表示は消さない：</strong>地図右下の「© OpenStreetMap contributors」は、利用条件上必要なクレジットです。</p></div></section>
+
+<section class="slide"><div class="kicker">LEAFLET BASIC</div><h2>地図・マーカー・線・レイヤ切替を作る</h2><p>左のコードをコピーして <code class="inline">index.html</code> として保存します。内灘駅と道の駅内灘サンセットパークを線で結ぶ例です。</p><div class="split-view"><div class="code-wrapper"><div class="code-header"><span>index.html（Leaflet基本）</span><button class="copy-mini" data-copy="code-leaflet-basic">コピー</button></div><pre><code id="code-leaflet-basic">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;内灘町 Leaflet入門マップ&lt;/title&gt;
+  &lt;link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"&gt;
+  &lt;style&gt;
+    body { margin: 0; }
+    #map { width: 100vw; height: 100vh; }
+    .red-pin { color:#fff; background:#b44848; border:3px solid #fff;
+      width:24px; height:24px; border-radius:50% 50% 50% 0;
+      transform:rotate(-45deg); box-shadow:0 2px 7px #0005; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="map"&gt;&lt;/div&gt;
+  &lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    const map = L.map('map').setView([36.657, 136.648], 13);
+
+    const osm = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      { attribution:'&amp;copy; OpenStreetMap contributors' }
+    ).addTo(map);
+
+    const station = L.marker([36.633524, 136.633933])
+      .bindPopup('&lt;b&gt;内灘駅&lt;/b&gt;&lt;br&gt;北陸鉄道浅野川線の駅です。');
+
+    const redIcon = L.divIcon({
+      className:'', html:'&lt;div class="red-pin"&gt;&lt;/div&gt;',
+      iconSize:[24,24], iconAnchor:[12,24]
+    });
+    const sunset = L.marker([36.659151, 136.648919], {icon:redIcon})
+      .bindPopup('道の駅内灘サンセットパーク');
+
+    const route = L.polyline([
+      [36.633524,136.633933], [36.659151,136.648919]
+    ], {color:'#196DAC', weight:4});
+
+    const features = L.layerGroup([station, sunset, route]).addTo(map);
+    L.control.layers({'基本マップ（OSM）':osm}, {'表示アイテム':features})
+      .addTo(map);
+    station.openPopup();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><div class="preview-wrapper"><div class="preview-header">ブラウザでの表示（ライブプレビュー）</div><iframe id="preview-leaflet-basic" class="preview-frame" title="Leaflet基本プレビュー" sandbox="allow-scripts allow-popups"></iframe></div></div></section>
+
+<section class="slide"><div class="kicker">CODE READING</div><h2>コードを7つの動きに分けて読む</h2><div class="g4"><div class="card"><span class="tag">1</span><h3>地図を作る</h3><p><code>L.map()</code>で地図領域を初期化。</p></div><div class="card"><span class="tag">2</span><h3>背景地図</h3><p><code>L.tileLayer()</code>でOSMを追加。</p></div><div class="card"><span class="tag">3</span><h3>マーカー</h3><p>緯度・経度を指定してピンを置く。</p></div><div class="card"><span class="tag">4</span><h3>ポップアップ</h3><p><code>bindPopup()</code>で説明を表示。</p></div><div class="card"><span class="tag">5</span><h3>カスタム</h3><p><code>divIcon()</code>で見た目を変更。</p></div><div class="card"><span class="tag">6</span><h3>線を引く</h3><p><code>polyline()</code>で地点を結ぶ。</p></div><div class="card"><span class="tag">7</span><h3>切り替える</h3><p><code>control.layers()</code>で表示を選択。</p></div><div class="card"><span class="tag">POINT</span><h3>座標の順番</h3><p>Leafletは原則 <strong>[緯度, 経度]</strong> の順番。</p></div></div><div class="notice"><p>AIへ修正を頼むときも、「地図の中心を変えて」「マーカーの色を変えて」のように、動きごとに指示すると伝わりやすくなります。</p></div></section>
+
+<section class="slide"><div class="kicker">STEP 3</div><h2>内灘町の公衆トイレCSVを準備する</h2><p>17地点の公衆トイレ情報を、UTF-8のCSVとして用意しました。ダウンロードして <code class="inline">index.html</code> と同じフォルダに保存します。</p><div class="download-card"><div><span class="tag" style="background:#fff;color:#196dac">UCHINADA OPEN DATA</span><h3>内灘町 公衆トイレ情報</h3><p>名称、所在地、設置位置、緯度・経度、男女別トイレ数、バリアフリー設備、利用可能時間などを収録。</p><div class="data-stats"><div class="data-stat"><b>17</b><span>施設</span></div><div class="data-stat"><b>37</b><span>項目</span></div><div class="data-stat"><b>UTF-8</b><span>文字コード</span></div></div></div><div class="filecard"><h3>ダウンロードするファイル</h3><code>toilet_uchinada.csv</code><button class="action green" id="download-csv">トイレデータCSVをダウンロード</button><p style="margin:13px 0 0;color:var(--muted);font-size:.78rem">Excelでも日本語が文字化けしにくいよう、ダウンロード時にUTF-8 BOMを付けます。</p></div></div></section>
+
+<section class="slide"><div class="kicker">DIRECTORY</div><h2>HTMLとCSVの場所をそろえる</h2><div class="g2"><div><p><code>fetch('./toilet_uchinada.csv')</code> は、「いま開いているHTMLと同じ場所にあるCSVを読む」という意味です。</p><div class="folder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h7l2 2h9v12H3z"/></svg><strong>uchinada-map/</strong><svg class="indent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h10l4 4v14H5zM14 3v5h5"/></svg><span>index.html <span class="folder-note">アプリ本体</span></span><svg class="indent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM4 10h16M10 5v14"/></svg><span>toilet_uchinada.csv <span class="folder-note">地図データ</span></span></div></div><div><h3>GitHubへアップロードするときも同じ</h3><div class="objectives"><div class="objective"><b>1</b><span>2ファイルを同じ階層へ置く</span></div><div class="objective"><b>2</b><span>ファイル名の大文字・小文字まで合わせる</span></div><div class="objective"><b>3</b><span>公開URLから動作を確認する</span></div></div></div></div><div class="warning"><p>WindowsでHTMLをダブルクリックして開くと、ブラウザのセキュリティ制約で <code>fetch</code> が失敗することがあります。GitHub Pages上のURLで確認しましょう。</p></div></section>
+
+<section class="slide"><div class="kicker">DATA SCHEMA</div><h2>列番号ではなく「見出し名」で読む</h2><p>元のコードにあった <code class="inline">cols[5]</code> のような固定位置は、今回のCSVでは列構成が異なるため使えません。見出し名で取得すると安全です。</p><div class="g2"><table class="schema"><thead><tr><th>見出し名</th><th>地図での用途</th></tr></thead><tbody><tr><td>名称</td><td>ポップアップのタイトル</td></tr><tr><td>緯度 / 経度</td><td>マーカーの位置</td></tr><tr><td>男性トイレ総数</td><td>設備情報</td></tr><tr><td>女性トイレ総数</td><td>設備情報</td></tr><tr><td>バリアフリートイレ数</td><td>設備情報</td></tr><tr><td>利用可能時間特記事項</td><td>利用案内</td></tr></tbody></table><div class="card"><h3>今回使うPapa Parse</h3><p>CSVの1行目を見出しとして読み込み、各行をオブジェクトへ変換します。項目中のカンマや引用符にも対応しやすくなります。</p><div style="padding:14px;border-radius:9px;color:#dceaf0;background:var(--code);font:12px/1.6 Consolas,monospace">row['名称']<br>Number(row['緯度'])<br>row['車椅子使用者用トイレ有無']</div><div class="tip"><p>データの列順が変わっても、見出し名が同じならコードを直さずに読み込めます。</p></div></div></div></section>
+
+<section class="slide"><div class="kicker">STEP 4</div><h2>CSVの17地点を地図にプロットする</h2><p><code class="inline">fetch</code>でCSVを読み込み、Papa Parseで解析し、各行の緯度・経度にマーカーを追加します。</p><div class="split-view"><div class="code-wrapper"><div class="code-header"><span>index.html（CSV読み込み版）</span><button class="copy-mini" data-copy="code-csv-plot">コピー</button></div><pre><code id="code-csv-plot">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;内灘町 公衆トイレマップ&lt;/title&gt;
+  &lt;link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"&gt;
+  &lt;style&gt;body{margin:0} #map{width:100vw;height:100vh}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="map"&gt;&lt;/div&gt;
+  &lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"&gt;&lt;/script&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/papaparse@5.5.3/papaparse.min.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    const map = L.map('map').setView([36.657,136.648],13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      attribution:'&amp;copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 外部データをHTMLへ入れる前に、危険な記号を無害化する
+    const escapeHtml = value =&gt; String(value ?? '')
+      .replaceAll('&amp;','&amp;amp;').replaceAll('&lt;','&amp;lt;')
+      .replaceAll('&gt;','&amp;gt;').replaceAll('"','&amp;quot;')
+      .replaceAll("'",'&amp;#039;');
+
+    fetch('./toilet_uchinada.csv')
+      .then(response =&gt; {
+        if (!response.ok) throw new Error('CSVを取得できません');
+        return response.text();
+      })
+      .then(text =&gt; {
+        const result = Papa.parse(text,{header:true,skipEmptyLines:true});
+        const markers = [];
+
+        result.data.forEach(row =&gt; {
+          const lat = Number(row['緯度']);
+          const lng = Number(row['経度']);
+          if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+          const popup = `
+            &lt;b style="color:#196DAC;font-size:1.1em"&gt;
+              ${escapeHtml(row['名称'])}
+            &lt;/b&gt;&lt;hr&gt;
+            男性用：${escapeHtml(row['男性トイレ総数'])}基 / 
+            女性用：${escapeHtml(row['女性トイレ総数'])}基&lt;br&gt;
+            バリアフリー：${escapeHtml(row['バリアフリートイレ数'])}基&lt;br&gt;
+            車椅子対応：${escapeHtml(row['車椅子使用者用トイレ有無'])}&lt;br&gt;
+            ${escapeHtml(row['利用可能時間特記事項'])}`;
+
+          markers.push(L.marker([lat,lng]).addTo(map).bindPopup(popup));
+        });
+
+        if (markers.length) {
+          map.fitBounds(L.featureGroup(markers).getBounds(),{padding:[25,25]});
+        }
+      })
+      .catch(error =&gt; {
+        console.error(error);
+        alert('CSVの読み込みに失敗しました。ファイル名と配置を確認してください。');
+      });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><div class="preview-wrapper"><div class="preview-header">内灘町 公衆トイレマップ（17地点）</div><iframe id="preview-csv-plot" class="preview-frame" title="CSV地図プレビュー" sandbox="allow-scripts allow-popups"></iframe></div></div></section>
+
+<section class="slide"><div class="kicker">TROUBLESHOOTING</div><h2>地図が表示されないときの確認順</h2><div class="g4"><div class="card"><span class="tag">CHECK 1</span><h3>地図の高さ</h3><p><code>#map</code>に高さがないと、地図は0pxになり見えません。</p></div><div class="card"><span class="tag">CHECK 2</span><h3>ファイル名</h3><p><code>toilet_uchinada.csv</code>と完全一致しているか。</p></div><div class="card"><span class="tag">CHECK 3</span><h3>同じ階層</h3><p>HTMLとCSVが同じフォルダに置かれているか。</p></div><div class="card"><span class="tag">CHECK 4</span><h3>公開URL</h3><p><code>file://</code>ではなくGitHub Pagesから開いているか。</p></div><div class="card"><span class="tag">CHECK 5</span><h3>列見出し</h3><p>「緯度」「経度」「名称」がCSVにあるか。</p></div><div class="card"><span class="tag">CHECK 6</span><h3>開発者ツール</h3><p>F12 → Consoleで赤いエラーを確認。</p></div><div class="card"><span class="tag">CHECK 7</span><h3>外部ライブラリ</h3><p>Leaflet・Papa ParseのURLが読み込めるか。</p></div><div class="card"><span class="tag">AIへ渡す</span><h3>エラー全文</h3><p>「動かない」だけでなく、赤いエラーをコピーして相談。</p></div></div></section>
+
+<section class="slide capstone"><div><div class="kicker">FINAL PRACTICE</div><h2>最終課題：<br>消防水利マップの開発</h2><p>これまで学んだGitHub Pages、Leaflet、CSV、UI/UX、トンマナを組み合わせ、内灘町の消防水利マッピングアプリを各自で作成します。</p><div class="goal">目標：土地勘のない応援消防隊も、スマートフォンで直感的に使えること</div></div></section>
+
+<section class="slide"><div class="kicker">REQUIREMENTS</div><h2>最終課題の基本仕様</h2><div class="g2"><div><div class="objectives"><div class="objective"><b>1</b><span>内灘町オープンデータ「消防水利」一覧をマッピング</span></div><div class="objective"><b>2</b><span>スマートフォン向けレイアウト</span></div><div class="objective"><b>3</b><span>内灘町の町章ロゴを分かりやすく配置</span></div><div class="objective"><b>4</b><span>「ここに行く」からGoogleマップの経路案内へ連携</span></div><div class="objective"><b>5</b><span>#2で決めた色・形・余白のトンマナを踏襲</span></div></div></div><div><h3>指定するディレクトリ構造</h3><div class="folder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h7l2 2h9v12H3z"/></svg><strong>uchinada-suiri-map/</strong><svg class="indent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h10l4 4v14H5zM14 3v5h5"/></svg><span>index.html</span><svg class="indent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h7l2 2h9v12H3z"/></svg><span>data/suiri.csv</span><svg class="indent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h7l2 2h9v12H3z"/></svg><span>images/logo.png</span></div><div class="warning"><p>消防水利データの公開範囲・利用条件は、研修用データの指示に従ってください。非公開データを公開リポジトリへ置かないこと。</p></div></div></div></section>
+
+<section class="slide"><div class="kicker">MATERIALS &amp; PROMPT</div><h2>利用する技術とAIへの伝え方</h2><div class="g2"><div class="card"><h3>マーカーを種類で分ける</h3><p>防火水槽は水滴、消火栓は消火器など、色だけに頼らず形でも見分けられるようにします。SVGやPNGを <code>./images/</code> に保存して使えます。</p><div class="tools"><a class="action light" href="https://icooon-mono.com/10938-%e7%9f%b3%e6%b2%b9%e3%81%ae%e6%b0%b4%e6%bb%b4%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b31/" target="_blank">水滴アイコン例</a><a class="action light" href="https://icooon-mono.com/12869-%e6%b6%88%e7%81%ab%e5%99%a8%e3%81%ae%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b34/" target="_blank">消火器アイコン例</a></div></div><div class="card"><h3>Googleマップへ経路案内</h3><p>選択した水利の緯度・経度をURLへ入れます。</p><div style="padding:14px;border-radius:9px;color:#dceaf0;background:var(--code);font:12px/1.6 Consolas,monospace;word-break:break-all">https://www.google.com/maps/dir/?api=1&amp;destination=緯度,経度</div><p style="margin-top:12px">新しいタブで開く場合は <code>target="_blank"</code> と <code>rel="noopener"</code> を指定します。</p></div></div><div class="notice"><p><strong>AIへの指示例：</strong>「Leaflet.jsを使い、<code>./data/suiri.csv</code>をfetchして、防火水槽と消火栓を別のアイコンで表示して」</p></div><div class="tools"><button class="action green" data-modal="finalprompt">詳しいプロンプト例を見る</button></div></section>
+
+<section class="slide"><div class="kicker">UI / UX</div><h2>消防水利を必要とする場面から考える</h2><p>機能を増やす前に、「誰が・どこで・どの端末で・何を急いで確認するか」を決めます。</p><div class="target-grid"><div class="target"><b>起動画面</b><p>すぐ地図を表示するか、短い説明画面を挟むか。</p></div><div class="target"><b>初期位置</b><p>内灘町役場を中心にするか、現在地を取得するか。</p></div><div class="target"><b>検索</b><p>地区名、住所、水利番号などで絞り込めるか。</p></div><div class="target"><b>現在地</b><p>迷ったときに現在地へ戻るボタンがあるか。</p></div><div class="target"><b>フィルター</b><p>防火水槽・消火栓・使用可否を切り替えられるか。</p></div><div class="target"><b>緊急時の視認性</b><p>屋外・片手操作・日光下でも文字とボタンが読めるか。</p></div></div><div class="tip"><p>AIへ「起動時に現在地を取得」「現在地から近い順に表示」「防火水槽だけを表示するボタン」など、利用場面と一緒に追加指示します。</p></div></section>
+
+<section class="slide"><div class="kicker">USER VOICES</div><h2>ユーザーの声を満たせているか</h2><div class="voice-grid"><div class="voice-card"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></div><div><div class="voice-name">町民 01</div><div class="voice-text">「自分の地区の消防水利が一目で分かるといい」</div></div></div><div class="voice-card"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17h16M6 17l2-7h8l2 7M9 10V6h6v4M8 21v-4M16 21v-4"/></svg></div><div><div class="voice-name">町民 02</div><div class="voice-text">「雪の日に水利の周囲を優先して除雪したい」</div></div></div><div class="voice-card"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div><div><div class="voice-name">町民 03</div><div class="voice-text">「文字を詰め込みすぎず、目に優しい画面がよい」</div></div></div><div class="voice-card"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.5 2c-1 .6-1.3 1.1-1.3 2M12 17h.01"/></svg></div><div><div class="voice-name">町民 04</div><div class="voice-text">「使い方をアプリ内で確認できると助かる」</div></div></div><div class="voice-card fire"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h18M5 17v-6h10l4 3v3M7 11V7h6v4"/><circle cx="8" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></div><div><div class="voice-name">県外応援消防隊 01</div><div class="voice-text">「土地勘がなくても、水利の状態と場所を理解したい」</div></div></div><div class="voice-card fire"><div class="voice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5 7-12a7 7 0 0 0-14 0c0 7 7 12 7 12Z"/><circle cx="12" cy="9" r="2"/></svg></div><div><div class="voice-name">県外応援消防隊 02</div><div class="voice-text">「現在地からの経路と、地名検索がほしい」</div></div></div></div><div class="notice"><p>チームで別の端末から開き、ユーザーの声を1件ずつ読み上げながら動作確認します。</p></div></section>
+
+<section class="slide"><div class="kicker">FINAL CHECK</div><h2>提出前チェックリスト</h2><div class="check-grid"><div class="check"><i>✓</i><span>GitHub PagesのURLから地図が表示される</span></div><div class="check"><i>✓</i><span>消防水利CSVを読み込み、件数が想定と一致する</span></div><div class="check"><i>✓</i><span>防火水槽と消火栓を見分けられる</span></div><div class="check"><i>✓</i><span>マーカーから詳細情報を確認できる</span></div><div class="check"><i>✓</i><span>「ここに行く」で正しい緯度・経度へ案内される</span></div><div class="check"><i>✓</i><span>スマートフォンでボタンを押しやすい</span></div><div class="check"><i>✓</i><span>内灘町の町章とトンマナが崩れていない</span></div><div class="check"><i>✓</i><span>公開してはいけない情報や秘密キーが含まれていない</span></div></div><div class="goal" style="margin-top:28px">それでは、AIを使った内灘町消防水利マップの開発を始めましょう。</div></section>
+
+</main>
+<footer class="nav"><div class="navleft"><button class="navbtn" id="prev">← 前へ</button><button class="navbtn save" id="save">HTML保存</button></div><div class="progress"><span id="count">1 / 18</span><div class="bar"><span id="bar"></span></div></div><div class="navright"><button class="navbtn primary" id="next">次へ →</button></div></footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><div class="modal-title"><h3 id="modal-title"></h3><button class="close-modal" id="close-modal" aria-label="閉じる">×</button></div><div class="modal-body" id="modal-body"></div><div class="modal-actions"><button class="action light" id="modal-copy" hidden>コピー</button><button class="action" id="modal-ok">閉じる</button></div></div></div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;
+const count=document.getElementById('count'),bar=document.getElementById('bar'),prev=document.getElementById('prev'),next=document.getElementById('next');
+function show(i){current=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,n)=>s.classList.toggle('active',n===current));count.textContent=`${current+1} / ${slides.length}`;bar.style.width=`${((current+1)/slides.length)*100}%`;prev.disabled=current===0;next.disabled=current===slides.length-1;slides[current].scrollTop=0}
+prev.onclick=()=>show(current-1);next.onclick=()=>show(current+1);document.addEventListener('keydown',e=>{if(document.getElementById('modal').classList.contains('open'))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});show(0);
+async function copyText(text,button){try{await navigator.clipboard.writeText(text)}catch(_){const a=document.createElement('textarea');a.value=text;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}if(button){const old=button.textContent;button.textContent='コピーしました';setTimeout(()=>button.textContent=old,1200)}}
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copyText(document.getElementById(b.dataset.copy).textContent,b));
+
+const finalPrompt=`Leaflet.jsを使って「内灘町 消防水利マップ」を作ってください。
+
+【ファイル構成】
+・index.html（アプリ本体）
+・./data/suiri.csv（消防水利データ）
+・./images/logo.png（内灘町の町章）
+
+【基本要件】
+・suiri.csvをfetchで読み込み、緯度・経度から全件をマッピングする
+・防火水槽と消火栓を、色だけでなく異なるSVGアイコンで表示する
+・マーカーを押すと、名称、種類、所在地、水利の状態などを表示する
+・ポップアップに「ここに行く」ボタンを設け、Googleマップの経路案内を新しいタブで開く
+・現在地を取得し、現在地へ戻るボタンを設置する
+・地区名や住所で検索できるようにする
+・水利種別を切り替えるフィルターを設置する
+・スマートフォンで片手操作しやすいレイアウトにする
+・白、内灘町の青（#196DAC）、町章の緑（#186845）を基本色にする
+・画面上部へ ./images/logo.png を縦横比を変えずに表示する
+・OpenStreetMapの帰属表示を残す
+・CSVの文字列を画面へ表示する前にHTMLエスケープを行う
+・データ取得中、取得失敗、0件の場合の表示を用意する
+
+外部ライブラリはLeaflet.jsとPapa ParseをCDNから読み込んで構いません。完全なindex.htmlを最初から最後まで出力し、その後にGitHub Pagesへの配置手順を説明してください。`;
+const modalData={
+security:{title:'GitHub Pages 公開前チェック',html:'<ul><li>個人情報・非公開業務データを含めていない</li><li>APIキー・パスワード・トークンを含めていない</li><li>画像やデータの公開・利用条件を確認した</li><li>CSVの内容を開いて、公開してよい列だけか確認した</li><li>過去の更新履歴にも秘密情報が残っていない</li></ul><div class="dangerbox"><p>一度公開した秘密情報は、画面から削除するだけでは不十分です。キーの無効化・再発行や履歴からの除去が必要になります。</p></div>'},
+finalprompt:{title:'内灘町 消防水利マップのプロンプト例',html:'<pre>'+finalPrompt.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')+'</pre>',copy:finalPrompt}
+};
+const modal=document.getElementById('modal'),modalTitle=document.getElementById('modal-title'),modalBody=document.getElementById('modal-body'),modalCopy=document.getElementById('modal-copy');let modalCopyText='';
+function openModal(key){const d=modalData[key];if(!d)return;modalTitle.textContent=d.title;modalBody.innerHTML=d.html;modalCopyText=d.copy||'';modalCopy.hidden=!d.copy;modal.classList.add('open')}
+function closeModal(){modal.classList.remove('open')}document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=()=>openModal(b.dataset.modal));document.getElementById('close-modal').onclick=closeModal;document.getElementById('modal-ok').onclick=closeModal;modalCopy.onclick=()=>copyText(modalCopyText,modalCopy);modal.onclick=e=>{if(e.target===modal)closeModal()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+document.getElementById('download-csv').onclick=async e=>{const b=e.currentTarget,old=b.textContent;b.textContent='準備中…';try{const r=await fetch('./toilet_uchinada.csv');if(!r.ok)throw new Error();const text=await r.text();const blob=new Blob(['\uFEFF',text],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='toilet_uchinada.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);b.textContent='ダウンロードしました'}catch(_){b.textContent='取得に失敗しました'}setTimeout(()=>b.textContent=old,1800)};
+document.getElementById('save').onclick=()=>{const blob=new Blob(['<!DOCTYPE html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='uchinada_vibe_coding_training3.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+
+const basicPreview=`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>html,body,#map{height:100%;margin:0}.red-pin{background:#b44848;border:3px solid #fff;width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 7px #0005}</style></head><body><div id="map"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script><script>const map=L.map('map').setView([36.647,136.64],13);const osm=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);const station=L.marker([36.633524,136.633933]).bindPopup('<b>内灘駅</b><br>北陸鉄道浅野川線の駅です。');const red=L.divIcon({className:'',html:'<div class="red-pin"></div>',iconSize:[24,24],iconAnchor:[12,24]});const sunset=L.marker([36.659151,136.648919],{icon:red}).bindPopup('道の駅内灘サンセットパーク');const route=L.polyline([[36.633524,136.633933],[36.659151,136.648919]],{color:'#196DAC',weight:4});const features=L.layerGroup([station,sunset,route]).addTo(map);L.control.layers({'基本マップ（OSM）':osm},{'表示アイテム':features}).addTo(map);station.openPopup();<\/script></body></html>`;
+document.getElementById('preview-leaflet-basic').srcdoc=basicPreview;
+const toiletPoints=[['向粟崎都市緑地',36.63076,136.62907,0,0,0],['はまちどり公園',36.638697,136.625597,3,2,1],['鶴ケ丘中央公園',36.645422,136.639569,4,2,1],['ハマナス恐竜公園',36.655838,136.64401,4,3,1],['大根布児童公園',36.650281,136.64511,4,2,0],['蓮湖渚公園',36.656431,136.653814,4,3,1],['宮坂ふれあい広場',36.667176,136.660122,1,0,0],['内灘町総合公園（パークゴルフ場）',36.662993,136.652504,6,4,1],['内灘町総合公園（テニスコート）',36.664393,136.653757,6,3,1],['白帆台第3公園',36.673357,136.658322,4,2,1],['白帆台第4公園',36.676496,136.661243,4,2,1],['室児童公園',36.686315,136.673319,0,0,0],['内灘町霊園',36.67634,136.65635,3,2,1],['内灘駅',36.633524,136.633933,3,2,1],['河北潟放水路',36.66471,136.64312,2,1,1],['内灘海水浴場',36.64045,136.62397,4,3,1],['道の駅内灘サンセットパーク',36.659151,136.648919,3,2,1]];
+const pointsJson=JSON.stringify(toiletPoints).replaceAll('<','\\u003c');
+const csvPreview=`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>html,body,#map{height:100%;margin:0}.leaflet-popup-content{line-height:1.6}</style></head><body><div id="map"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script><script>const pts=${pointsJson};const map=L.map('map').setView([36.657,136.648],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);const markers=pts.map(p=>L.marker([p[1],p[2]]).addTo(map).bindPopup('<b style="color:#196DAC">'+p[0]+'</b><hr>男性用：'+p[3]+'基 / 女性用：'+p[4]+'基<br>バリアフリー：'+p[5]+'基'));map.fitBounds(L.featureGroup(markers).getBounds(),{padding:[20,20]});<\/script></body></html>`;
+document.getElementById('preview-csv-plot').srcdoc=csvPreview;
+</script>
+</body>
+</html>
