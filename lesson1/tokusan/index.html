@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="内灘餅、砂丘の真珠、内灘町のミルク。砂丘と河北潟が育てた、内灘町のおいしい特産品を紹介します。">
+  <meta name="theme-color" content="#196DAC">
+  <title>うちなだ、おいしい！｜内灘町の特産品</title>
+  <style>
+    :root {
+      --blue: #196DAC;
+      --green: #186845;
+      --ink: #10231d;
+      --paper: #fffdf4;
+      --yellow: #ffdb45;
+      --pink: #ff826e;
+      --sky: #bde9f4;
+      --line: 2px solid var(--ink);
+      --shadow: 7px 7px 0 var(--ink);
+      --max: 1320px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .17;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button { font: inherit; }
+    ::selection { color: white; background: var(--green); }
+
+    .skip-link {
+      position: fixed; top: 8px; left: 8px; z-index: 10001;
+      padding: 10px 14px; background: white; border: var(--line);
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: none; }
+    .scroll-progress {
+      position: fixed; inset: 0 auto auto 0; z-index: 10000;
+      width: 0; height: 7px; background: var(--yellow); border-bottom: 2px solid var(--ink);
+    }
+
+    .site-header {
+      position: fixed; z-index: 1000; top: 18px; left: 50%;
+      width: min(calc(100% - 32px), 1180px); transform: translateX(-50%);
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      padding: 11px 13px 11px 19px; border: var(--line); border-radius: 999px;
+      background: rgba(255,253,244,.94); box-shadow: 4px 4px 0 var(--ink);
+      backdrop-filter: blur(8px);
+    }
+    .brand { text-decoration: none; font-weight: 900; letter-spacing: -.04em; }
+    .brand small { margin-left: 7px; font-size: 10px; letter-spacing: .08em; }
+    .nav-links { display: flex; align-items: center; gap: 7px; }
+    .nav-links a {
+      padding: 8px 12px; border-radius: 999px; text-decoration: none;
+      font-size: 13px; font-weight: 800;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: white; background: var(--green); outline: none; }
+    .nav-cta { color: white !important; background: var(--blue); border: 1.5px solid var(--ink); }
+
+    .hero {
+      position: relative; min-height: 100svh; overflow: hidden;
+      display: grid; place-items: center; padding: 120px 20px 76px;
+      color: white; background: var(--blue);
+      border-bottom: 3px solid var(--ink);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 12% 78%, rgba(255,219,69,.95) 0 8%, transparent 8.2%),
+        radial-gradient(circle at 88% 20%, rgba(255,130,110,.9) 0 11%, transparent 11.2%),
+        linear-gradient(115deg, transparent 48%, rgba(255,255,255,.12) 49% 51%, transparent 52%);
+    }
+    .hero-inner { position: relative; width: min(100%, 1240px); text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; padding: 9px 14px;
+      color: var(--ink); background: var(--yellow); border: var(--line);
+      transform: rotate(-2deg); font-size: 13px; font-weight: 900; letter-spacing: .14em;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .eyebrow::before { content: "●"; color: var(--green); }
+    h1 {
+      position: relative; z-index: 2; margin: 32px auto 20px;
+      font-size: clamp(64px, 14vw, 186px); line-height: .78; letter-spacing: -.105em;
+      font-weight: 900; text-shadow: 6px 6px 0 var(--green), 9px 9px 0 var(--ink);
+    }
+    h1 span { display: block; }
+    h1 .delicious { color: var(--yellow); font-size: .73em; transform: rotate(-2deg); }
+    .hero-copy {
+      position: relative; z-index: 3; width: min(92%, 650px); margin: 31px auto 0;
+      font-weight: 800; line-height: 1.9; text-shadow: 1px 1px 0 var(--ink);
+    }
+    .hero-sticker {
+      position: absolute; z-index: 4; display: grid; place-items: center;
+      width: 142px; aspect-ratio: 1; color: var(--ink); background: var(--paper);
+      border: var(--line); border-radius: 50%; box-shadow: var(--shadow);
+      font-weight: 900; line-height: 1.35; transform: rotate(10deg);
+    }
+    .hero-sticker.one { top: 13%; left: 2%; }
+    .hero-sticker.two { right: 2%; bottom: 1%; color: white; background: var(--green); transform: rotate(-8deg); }
+    .scroll-cue {
+      position: absolute; left: 28px; bottom: 26px; display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 900; letter-spacing: .14em; writing-mode: vertical-rl;
+    }
+    .scroll-cue::after { content: ""; width: 2px; height: 64px; background: white; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100% { transform: scaleY(.2); transform-origin: top; } 50% { transform: scaleY(1); } }
+
+    .marquee { overflow: hidden; color: var(--ink); background: var(--yellow); border-bottom: var(--line); }
+    .marquee-track {
+      display: flex; width: max-content; padding: 13px 0;
+      animation: marquee 24s linear infinite; font-weight: 900; font-size: clamp(18px, 2.3vw, 32px);
+    }
+    .marquee-track span { padding-right: 28px; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    .intro { position: relative; padding: 100px 20px 115px; overflow: hidden; }
+    .intro-grid {
+      width: min(100%, var(--max)); margin: auto; display: grid;
+      grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(40px, 8vw, 120px);
+    }
+    .kicker { color: var(--blue); font-weight: 900; letter-spacing: .16em; }
+    .display-heading {
+      margin: 17px 0 25px; font-size: clamp(44px, 7vw, 96px); line-height: .98;
+      letter-spacing: -.07em; font-weight: 900;
+    }
+    .display-heading .marker { position: relative; z-index: 0; white-space: nowrap; }
+    .display-heading .marker::after {
+      content: ""; position: absolute; z-index: -1; left: -2%; right: -2%; bottom: .08em;
+      height: .31em; background: var(--yellow); transform: rotate(-1deg);
+    }
+    .lead { font-size: clamp(16px, 1.6vw, 20px); line-height: 2; font-weight: 700; }
+    .map-card {
+      position: relative; min-height: 450px; display: grid; place-items: center;
+      color: white; background: var(--green); border: var(--line); border-radius: 48% 52% 44% 56% / 58% 36% 64% 42%;
+      box-shadow: 14px 14px 0 var(--sky), 17px 17px 0 var(--ink); transform: rotate(3deg);
+    }
+    .map-card::before, .map-card::after {
+      content: ""; position: absolute; border: 2px dashed white; border-radius: 50%; opacity: .7;
+    }
+    .map-card::before { width: 76%; height: 66%; }
+    .map-card::after { width: 54%; height: 44%; }
+    .map-words { position: relative; z-index: 2; text-align: center; }
+    .map-words b { display: block; font-size: clamp(47px, 7vw, 90px); line-height: 1; letter-spacing: -.08em; }
+    .map-words span { display: inline-block; margin-top: 14px; padding: 5px 11px; color: var(--ink); background: white; font-weight: 900; }
+
+    .products { background: #eaf6f8; border-block: 3px solid var(--ink); }
+    .section-top { padding: 72px 20px 30px; text-align: center; }
+    .section-top h2 { margin: 10px 0; font-size: clamp(50px, 9vw, 124px); line-height: .9; letter-spacing: -.08em; }
+    .section-top p { font-weight: 800; }
+    .product {
+      min-height: 90svh; display: grid; grid-template-columns: 1fr 1fr;
+      border-top: var(--line); background: var(--paper);
+    }
+    .product:nth-of-type(even) .product-visual { order: 2; }
+    .product-visual { position: relative; overflow: hidden; min-height: 640px; background: var(--blue); }
+    .product-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+    .product:hover .product-visual img { transform: scale(1.045); }
+    .image-fallback {
+      position: absolute; inset: 0; z-index: 0; display: grid; place-items: center;
+      padding: 30px; color: white; text-align: center; font-size: clamp(30px, 6vw, 80px); font-weight: 900;
+      background: var(--blue);
+    }
+    .product:nth-of-type(3) .image-fallback { background: var(--green); }
+    .product-visual img { position: relative; z-index: 1; }
+    .product-number {
+      position: absolute; z-index: 2; top: 26px; left: 26px; display: grid; place-items: center;
+      width: 78px; aspect-ratio: 1; color: white; background: var(--ink); border: 2px solid white; border-radius: 50%;
+      font: 900 28px/1 Georgia, serif; box-shadow: 4px 4px 0 var(--yellow); transform: rotate(-8deg);
+    }
+    .product-content {
+      display: flex; flex-direction: column; justify-content: center; padding: clamp(54px, 8vw, 120px);
+      border-left: var(--line);
+    }
+    .product:nth-of-type(even) .product-content { border-left: 0; border-right: var(--line); }
+    .product-label { color: var(--blue); font-weight: 900; letter-spacing: .16em; }
+    .product-content h3 { margin: 15px 0 13px; font-size: clamp(51px, 7vw, 103px); line-height: .9; letter-spacing: -.075em; }
+    .product-content h3 small { display: block; margin-bottom: 17px; font-size: 16px; letter-spacing: .06em; }
+    .product-tag {
+      align-self: flex-start; margin-bottom: 27px; padding: 7px 12px; background: var(--yellow);
+      border: var(--line); box-shadow: 3px 3px 0 var(--ink); transform: rotate(-1deg); font-weight: 900;
+    }
+    .product-text { margin: 0; font-size: 16px; line-height: 2.05; font-weight: 600; }
+    .product-text + .product-text { margin-top: 17px; }
+    .mini-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+    .mini-fact { padding: 16px; border: var(--line); background: white; box-shadow: 3px 3px 0 var(--ink); }
+    .mini-fact b { display: block; color: var(--green); font-size: 22px; }
+    .mini-fact span { font-size: 12px; font-weight: 800; }
+
+    .milk-kingdom { position: relative; overflow: hidden; padding: 120px 20px; color: white; background: var(--green); border-bottom: 3px solid var(--ink); }
+    .milk-kingdom::before {
+      content: "MILK KINGDOM  MILK KINGDOM"; position: absolute; top: -1.1vw; left: -2vw;
+      font-size: 10vw; white-space: nowrap; opacity: .08; font-weight: 900;
+    }
+    .milk-inner { position: relative; width: min(100%, var(--max)); margin: auto; display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: center; }
+    .big-stat {
+      position: relative; display: grid; place-items: center; min-height: 470px; text-align: center;
+      color: var(--ink); background: var(--yellow); border: var(--line); border-radius: 50%; box-shadow: 15px 15px 0 white, 18px 18px 0 var(--ink); transform: rotate(-5deg);
+    }
+    .big-stat strong { display: block; font-size: clamp(100px, 15vw, 205px); line-height: .75; letter-spacing: -.12em; }
+    .big-stat strong span { font-size: .42em; }
+    .big-stat p { margin: 24px auto 0; width: 75%; font-weight: 900; line-height: 1.6; }
+    .milk-copy h2 { margin: 12px 0 28px; font-size: clamp(54px, 8vw, 110px); line-height: .87; letter-spacing: -.08em; }
+    .milk-copy p { font-size: 17px; line-height: 2; font-weight: 700; }
+    .milk-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .milk-badges span { padding: 9px 13px; color: var(--ink); background: white; border: var(--line); border-radius: 999px; font-weight: 900; }
+
+    .chooser { padding: 110px 20px; background: var(--yellow); border-bottom: 3px solid var(--ink); }
+    .chooser-inner { width: min(100%, 1060px); margin: auto; text-align: center; }
+    .chooser h2 { margin: 0 0 16px; font-size: clamp(44px, 7vw, 84px); line-height: 1; letter-spacing: -.07em; }
+    .chooser-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin: 35px 0; }
+    .chooser-button {
+      padding: 15px 20px; color: var(--ink); background: white; border: var(--line); border-radius: 999px;
+      box-shadow: 4px 4px 0 var(--ink); font-weight: 900; cursor: pointer; transition: .18s ease;
+    }
+    .chooser-button:hover, .chooser-button:focus-visible, .chooser-button[aria-pressed="true"] {
+      color: white; background: var(--blue); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); outline: none;
+    }
+    .chooser-result {
+      position: relative; min-height: 220px; display: grid; place-items: center; padding: 42px;
+      background: var(--paper); border: var(--line); box-shadow: 10px 10px 0 var(--ink); transform: rotate(.5deg);
+    }
+    .chooser-result::before { content: "TODAY'S UCHINADA"; position: absolute; top: 12px; font-size: 10px; font-weight: 900; letter-spacing: .2em; }
+    .result-name { display: block; color: var(--green); font-size: clamp(36px, 6vw, 70px); line-height: 1; font-weight: 900; letter-spacing: -.06em; }
+    .result-copy { display: block; margin-top: 15px; font-weight: 800; line-height: 1.7; }
+
+    .finale { position: relative; min-height: 80svh; display: grid; place-items: center; overflow: hidden; padding: 100px 20px; text-align: center; color: white; background: var(--blue); }
+    .finale::before {
+      content: ""; position: absolute; width: 90vw; aspect-ratio: 1; border: 2px dashed rgba(255,255,255,.5); border-radius: 50%; animation: spin 35s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .finale-inner { position: relative; z-index: 1; }
+    .finale h2 { margin: 16px 0 27px; font-size: clamp(62px, 13vw, 175px); line-height: .8; letter-spacing: -.1em; text-shadow: 6px 6px 0 var(--green), 9px 9px 0 var(--ink); }
+    .finale p { font-size: 18px; font-weight: 800; line-height: 1.9; }
+    .back-top {
+      display: inline-block; margin-top: 27px; padding: 13px 20px; color: var(--ink); background: var(--yellow);
+      border: var(--line); border-radius: 999px; box-shadow: 4px 4px 0 var(--ink); text-decoration: none; font-weight: 900;
+    }
+
+    footer {
+      display: flex; justify-content: space-between; gap: 20px; padding: 25px max(20px, calc((100% - var(--max))/2));
+      color: white; background: var(--ink); font-size: 12px; font-weight: 700;
+    }
+
+    .reveal { opacity: 0; transform: translateY(42px) rotate(.5deg); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      .site-header { top: 10px; }
+      .brand small, .nav-links a:not(.nav-cta) { display: none; }
+      .hero-sticker { width: 94px; font-size: 12px; }
+      .hero-sticker.one { top: 16%; left: -10px; }
+      .hero-sticker.two { right: -9px; bottom: 6%; }
+      .scroll-cue { display: none; }
+      .intro-grid, .milk-inner { grid-template-columns: 1fr; }
+      .map-card { min-height: 360px; }
+      .product { display: flex; flex-direction: column; }
+      .product-visual, .product:nth-of-type(even) .product-visual { order: 0; min-height: 64svh; }
+      .product-content { order: 1; border: 0 !important; border-top: var(--line) !important; padding: 58px 25px 70px; }
+      .big-stat { min-height: 390px; }
+      footer { flex-direction: column; }
+    }
+
+    @media (max-width: 520px) {
+      .hero { padding-inline: 13px; }
+      h1 { font-size: 24vw; text-shadow: 4px 4px 0 var(--green), 6px 6px 0 var(--ink); }
+      .hero-copy { font-size: 14px; }
+      .intro, .milk-kingdom, .chooser { padding-block: 80px; }
+      .product-visual { min-height: 52svh; }
+      .mini-facts { grid-template-columns: 1fr; }
+      .big-stat { min-height: 330px; }
+      .chooser-result { padding-inline: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      .site-header, .scroll-progress, .scroll-cue, .chooser, .back-top { display: none !important; }
+      .hero, .product, .milk-kingdom, .finale { min-height: auto; break-inside: avoid; }
+      .reveal { opacity: 1; transform: none; }
+      body::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">うちなだ、おいしい！<small>UCHINADA SPECIALTIES</small></a>
+    <nav class="nav-links" aria-label="メインナビゲーション">
+      <a href="#story">内灘のこと</a>
+      <a href="#products">3つのおいしい</a>
+      <a class="nav-cta" href="#choose">どれにする？</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <p class="eyebrow">砂丘と潟がつくった、ごちそう</p>
+        <h1><span>うちなだ、</span><span class="delicious">おいしい！</span></h1>
+        <p class="hero-copy">海のそば。砂丘の上。河北潟のほとり。<br>内灘町には、土地の記憶と人の手仕事から生まれた、おいしいものがあります。</p>
+        <div class="hero-sticker one" aria-hidden="true">MADE IN<br>UCHINADA</div>
+        <div class="hero-sticker two" aria-hidden="true">3 LOCAL<br>TREASURES</div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">SCROLL</div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>内灘餅 ● 砂丘の真珠 ● ミルク王国ウチナダ ●</span><span>内灘餅 ● 砂丘の真珠 ● ミルク王国ウチナダ ●</span>
+        <span>内灘餅 ● 砂丘の真珠 ● ミルク王国ウチナダ ●</span><span>内灘餅 ● 砂丘の真珠 ● ミルク王国ウチナダ ●</span>
+      </div>
+    </div>
+
+    <section class="intro" id="story">
+      <div class="intro-grid">
+        <div class="reveal">
+          <p class="kicker">ABOUT UCHINADA</p>
+          <h2 class="display-heading">海と、潟と、<br><span class="marker">大きな砂丘。</span></h2>
+          <p class="lead">内灘町は日本海に面し、河北潟や内灘砂丘が広がる町です。海風が吹く砂丘地では畑の恵みが育ち、河北潟干拓地では酪農が営まれています。景色のちがいが、そのまま「おいしい」の個性になりました。</p>
+        </div>
+        <div class="map-card reveal" aria-label="内灘町の風景を表すグラフィック">
+          <div class="map-words"><b>海・砂丘・潟</b><span>3つの風景、3つのおいしい</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products" id="products">
+      <div class="section-top reveal">
+        <p class="kicker">LOCAL TREASURES</p>
+        <h2>3つのおいしい。</h2>
+        <p>写真を眺めて、土地の物語を味わってください。</p>
+      </div>
+
+      <article class="product" id="mochi">
+        <div class="product-visual">
+          <div class="image-fallback">画像 1<br>内灘餅</div>
+          <img src="./images/1.png" alt="内灘餅（ピーナッツ餅）" loading="lazy">
+          <span class="product-number">01</span>
+        </div>
+        <div class="product-content reveal">
+          <p class="product-label">PEANUT MOCHI</p>
+          <h3><small>砂丘育ちの落花生を、たっぷり。</small>内灘餅</h3>
+          <span class="product-tag">やさしい甘さ × 風味豊かな食感</span>
+          <p class="product-text">砂丘地で穫れる落花生をふんだんに入れた、優しい甘さの「ピーナッツ餅」は、内灘町の西荒屋地区で昔から子どもたちに愛されてきたおやつです。</p>
+          <p class="product-text">昔ながらの味を絶やさないよう、西荒屋地区の地域おこし団体「西荒屋営農促進会」のメンバーが、「内灘餅」として、ひとつひとつ丁寧に手作業で製造・販売しています。</p>
+          <div class="mini-facts">
+            <div class="mini-fact"><b>100%</b><span>ピーナッツも餅米も Made in 内灘</span></div>
+            <div class="mini-fact"><b>手仕事</b><span>地域に受け継がれてきた味</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="product" id="rakkyo">
+        <div class="product-visual">
+          <div class="image-fallback">画像 2<br>砂丘の真珠</div>
+          <img src="./images/2.png" alt="砂丘の真珠（3年子らっきょう）" loading="lazy">
+          <span class="product-number">02</span>
+        </div>
+        <div class="product-content reveal">
+          <p class="product-label">DUNE PEARL</p>
+          <h3><small>三年待って、この歯ごたえ。</small>砂丘の真珠</h3>
+          <span class="product-tag">シャキシャキ × ひと粒ずつ手作業</span>
+          <p class="product-text">内灘砂丘で採れた3年子らっきょうは、ひと粒ひと粒、手作業で丁寧に皮を取り酢漬けしています。口に運べば、シャキシャキとした歯ごたえが弾けます。</p>
+          <p class="product-text">「おいCまち内灘」は、無農薬・非化学肥料を使用し、町内の高校生や高齢者の方とも連携して加工・販売を行っています。</p>
+          <div class="mini-facts">
+            <div class="mini-fact"><b>3年子</b><span>内灘砂丘でじっくり育ったらっきょう</span></div>
+            <div class="mini-fact"><b>地域連携</b><span>高校生や高齢者の方と加工・販売</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="product" id="milk">
+        <div class="product-visual">
+          <div class="image-fallback">画像 3<br>内灘のミルク</div>
+          <img src="./images/3.png" alt="内灘町のミルク" loading="lazy">
+          <span class="product-number">03</span>
+        </div>
+        <div class="product-content reveal">
+          <p class="product-label">MILK KINGDOM</p>
+          <h3><small>河北潟から届く、まちの誇り。</small>内灘ミルク</h3>
+          <span class="product-tag">河北潟干拓地 × 酪農</span>
+          <p class="product-text">河北潟干拓地では酪農が営まれています。令和5年度には、石川県の牛乳生産量の61%を内灘町産が占めました。</p>
+          <p class="product-text">「ミルク王国ウチナダ」では、内灘町のミルクでおもてなしする店を「ミルク王国の店」として認定し、各店がオリジナル商品を提供しています。</p>
+          <div class="mini-facts">
+            <div class="mini-fact"><b>61%</b><span>石川県の牛乳生産量に占める内灘町産</span></div>
+            <div class="mini-fact"><b>王国の店</b><span>内灘ミルクのオリジナル商品</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="milk-kingdom" aria-labelledby="kingdom-title">
+      <div class="milk-inner">
+        <div class="big-stat reveal">
+          <div><strong>61<span>%</span></strong><p>令和5年度 石川県の牛乳生産量に占める内灘町産の割合</p></div>
+        </div>
+        <div class="milk-copy reveal">
+          <p class="kicker" style="color:var(--yellow)">WELCOME TO THE KINGDOM</p>
+          <h2 id="kingdom-title">ミルク王国<br>ウチナダ</h2>
+          <p>しぼられたミルクが、それぞれのお店のアイデアと出会う。飲みもの、お菓子、料理へ。内灘町のミルクでおもてなしする認定店「ミルク王国の店」では、各店のオリジナル商品を楽しめます。</p>
+          <div class="milk-badges" aria-label="ミルク王国ウチナダの特徴"><span>内灘町産ミルク</span><span>認定店</span><span>オリジナル商品</span><span>まちのおもてなし</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chooser" id="choose" aria-labelledby="chooser-title">
+      <div class="chooser-inner reveal">
+        <p class="kicker">CHOOSE YOUR UCHINADA</p>
+        <h2 id="chooser-title">今日は、どんな気分？</h2>
+        <p>気分をひとつ選ぶと、内灘のおいしいものをご案内します。</p>
+        <div class="chooser-buttons" role="group" aria-label="今日の気分">
+          <button class="chooser-button" type="button" data-choice="comfort" aria-pressed="false">ほっとしたい</button>
+          <button class="chooser-button" type="button" data-choice="crisp" aria-pressed="false">しゃきっとしたい</button>
+          <button class="chooser-button" type="button" data-choice="explore" aria-pressed="false">まちを巡りたい</button>
+        </div>
+        <div class="chooser-result" aria-live="polite">
+          <div><span class="result-name">気分を選んでね。</span><span class="result-copy">3つのボタンから、いまの気分に近いものをどうぞ。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="finale-inner reveal">
+        <p class="eyebrow">SEE YOU IN UCHINADA</p>
+        <h2>食べに、<br>おいで。</h2>
+        <p>砂丘と河北潟が育てた、ここにしかない味。<br>次の内灘町では、景色と一緒に「おいしい」を探してみませんか。</p>
+        <a class="back-top" href="#top">ページの先頭へ ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>うちなだ、おいしい！｜内灘町特産品紹介</span>
+    <span>UCHINADA SPECIALTIES</span>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var progress = document.querySelector(".scroll-progress");
+      function updateProgress() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var value = max > 0 ? (window.scrollY / max) * 100 : 0;
+        progress.style.width = value + "%";
+      }
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.13 });
+        items.forEach(function (item) { observer.observe(item); });
+      } else {
+        items.forEach(function (item) { item.classList.add("is-visible"); });
+      }
+
+      var answers = {
+        comfort: { name: "内灘餅", copy: "落花生の風味とやさしい甘さ。西荒屋で受け継がれてきた、ほっとするおやつを。", target: "#mochi" },
+        crisp: { name: "砂丘の真珠", copy: "3年子らっきょうのシャキシャキ食感で、気分まで小気味よく。", target: "#rakkyo" },
+        explore: { name: "ミルク王国ウチナダ", copy: "認定店ごとのオリジナル商品を探して、内灘町をおいしく巡ってみよう。", target: "#milk" }
+      };
+      var buttons = document.querySelectorAll(".chooser-button");
+      var resultName = document.querySelector(".result-name");
+      var resultCopy = document.querySelector(".result-copy");
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          buttons.forEach(function (other) { other.setAttribute("aria-pressed", "false"); });
+          button.setAttribute("aria-pressed", "true");
+          var answer = answers[button.getAttribute("data-choice")];
+          resultName.textContent = answer.name;
+          resultCopy.textContent = answer.copy + "　もう一度押すと商品へ移動します。";
+          if (button.getAttribute("data-selected") === "true") {
+            document.querySelector(answer.target).scrollIntoView({ behavior: "smooth" });
+          }
+          buttons.forEach(function (other) { other.removeAttribute("data-selected"); });
+          button.setAttribute("data-selected", "true");
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
