@@ -91,16 +91,23 @@
         .grid { display: grid; }
         .grid-cols-1 { grid-template-columns: 1fr; }
         .gap-3 { gap: 12px; }
-        label.relative {
-            position: relative; display: flex; padding: 14px; cursor: pointer;
+        .font-option {
+            position: relative; display: flex; width: 100%; padding: 14px; cursor: pointer;
             border: 1px solid var(--line); border-radius: 9px; background: #fff;
             box-shadow: 0 2px 8px rgba(19,72,99,.05); transition: .15s ease;
+            color: inherit; text-align: left; font: inherit;
         }
-        label.relative:hover { background: #f5f9fb; }
-        label.relative:has(input:checked) { border-color: var(--blue); background: #eef6fb; box-shadow: 0 0 0 1px var(--blue); }
-        label .flex-col { display: flex; flex-direction: column; width: 100%; }
-        label span:first-of-type { color: var(--ink); font-size: .88rem; font-weight: 700; }
-        label span:last-of-type { color: var(--muted); font-size: .75rem; line-height: 1.55; }
+        .font-option:hover { background: #f5f9fb; }
+        .font-option.selected { border-color: var(--blue); background: #eef6fb; box-shadow: 0 0 0 1px var(--blue); }
+        .font-option:focus { outline: 3px solid rgba(35,116,160,.25); outline-offset: 2px; }
+        .font-option .flex-col { display: flex; flex-direction: column; width: 100%; padding-right: 58px; }
+        .font-option span:first-of-type { color: var(--ink); font-size: .88rem; font-weight: 700; }
+        .font-option span:last-of-type { color: var(--muted); font-size: .75rem; line-height: 1.55; }
+        .font-option.selected::after {
+            content: "選択中"; position: absolute; top: 10px; right: 10px;
+            padding: 3px 7px; border-radius: 999px; background: var(--blue);
+            color: #fff; font-size: .68rem; font-weight: 700;
+        }
         #drop-zone {
             padding: 34px 20px;
             border: 2px dashed #aebfc8;
@@ -194,37 +201,33 @@
                 <div class="p-4 border-t border-slate-200 bg-slate-50/50">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <!-- メイリオ -->
-                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm hover:bg-slate-50 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                            <input type="radio" name="fontSelection" value="Meiryo" class="sr-only" checked>
+                        <button type="button" class="font-option selected" data-font="Meiryo" aria-pressed="true">
                             <div class="flex flex-col w-full">
                                 <span class="block text-sm font-bold text-slate-900" style="font-family: 'Meiryo UI', Meiryo, sans-serif;">メイリオ (Meiryo)</span>
                                 <span class="mt-1 block text-xs text-slate-500 leading-relaxed" style="font-family: 'Meiryo UI', Meiryo, sans-serif;">画面表示に最適化されたゴシック体。<br>スライドで非常に読みやすいです。</span>
                             </div>
-                        </label>
+                        </button>
                         <!-- 游ゴシック -->
-                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm hover:bg-slate-50 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                            <input type="radio" name="fontSelection" value="Yu Gothic" class="sr-only">
+                        <button type="button" class="font-option" data-font="Yu Gothic" aria-pressed="false">
                             <div class="flex flex-col w-full">
                                 <span class="block text-sm font-bold text-slate-900" style="font-family: 'Yu Gothic', sans-serif;">游ゴシック (Yu Gothic)</span>
                                 <span class="mt-1 block text-xs text-slate-500 leading-relaxed" style="font-family: 'Yu Gothic', sans-serif;">美しい日本語フォント。<br>視認性が高く幅広く使えます。</span>
                             </div>
-                        </label>
+                        </button>
                         <!-- 游明朝 -->
-                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm hover:bg-slate-50 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                            <input type="radio" name="fontSelection" value="Yu Mincho" class="sr-only">
+                        <button type="button" class="font-option" data-font="Yu Mincho" aria-pressed="false">
                             <div class="flex flex-col w-full">
                                 <span class="block text-sm font-bold text-slate-900" style="font-family: 'Yu Mincho', serif;">游明朝 (Yu Mincho)</span>
                                 <span class="mt-1 block text-xs text-slate-500 leading-relaxed" style="font-family: 'Yu Mincho', serif;">標準的な明朝体。<br>フォーマルな印象を与えたい場合に。</span>
                             </div>
-                        </label>
+                        </button>
                         <!-- MS Pゴシック -->
-                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm hover:bg-slate-50 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
-                            <input type="radio" name="fontSelection" value="MS PGothic" class="sr-only">
+                        <button type="button" class="font-option" data-font="MS PGothic" aria-pressed="false">
                             <div class="flex flex-col w-full">
                                 <span class="block text-sm font-bold text-slate-900" style="font-family: 'MS PGothic', sans-serif;">ＭＳ Ｐゴシック (MS PGothic)</span>
                                 <span class="mt-1 block text-xs text-slate-500 leading-relaxed" style="font-family: 'MS PGothic', sans-serif;">古くからある標準フォント。<br>互換性重視の用途におすすめです。</span>
                             </div>
-                        </label>
+                        </button>
                     </div>
                 </div>
             </details>
@@ -399,8 +402,22 @@ var PptxGenJS=(S=>{function p(e,l,s,n){return new(s=s||Promise)(function(a,A){fu
             const statusText = document.getElementById('status-text');
             const progressPercent = document.getElementById('progress-percent');
             const renderFrame = document.getElementById('render-frame');
+            const fontButtons = Array.from(document.querySelectorAll('.font-option'));
 
             let selectedFile = null;
+            let selectedFontName = 'Meiryo';
+
+            // 古いブラウザでも確実に動く通常ボタン方式でフォントを切り替える
+            fontButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    selectedFontName = button.getAttribute('data-font') || 'Meiryo';
+                    fontButtons.forEach(item => {
+                        const isSelected = item === button;
+                        item.classList.toggle('selected', isSelected);
+                        item.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+                    });
+                });
+            });
 
             // --- ドラッグ＆ドロップのイベント設定 ---
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -716,7 +733,7 @@ var PptxGenJS=(S=>{function p(e,l,s,n){return new(s=s||Promise)(function(a,A){fu
             // --- メイン処理ループ ---
             async function processHtmlToEditablePptx(htmlString) {
                 return new Promise((resolve, reject) => {
-                    const selectedFont = document.querySelector('input[name="fontSelection"]:checked').value;
+                    const selectedFont = selectedFontName;
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(htmlString, 'text/html');
 
